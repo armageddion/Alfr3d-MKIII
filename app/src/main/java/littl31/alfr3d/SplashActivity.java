@@ -71,8 +71,8 @@ public class SplashActivity extends Activity {
                 } catch (Exception e){
                     //TODO
                 } finally {
-                    //Intent i = new Intent(SplashActivity.this,MainAlfr3d.class);
-                    //startActivity(i);
+                    Intent i = new Intent(SplashActivity.this,MainActivity.class);
+                    startActivity(i);
                     finish();
                 }
             }

@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">Alfr3d</string>
+    <string name="SplashRoll">Splash roll</string>
+    <string name="title_activity_main">Alfr3dMainActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
