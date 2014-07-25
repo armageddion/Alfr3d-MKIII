@@ -3,8 +3,15 @@
 
     <string name="app_name">Alfr3d</string>
     <string name="SplashRoll">Splash roll</string>
-    <string name="title_activity_main">Alfr3dMainActivity</string>
+    <string name="title_activity_main">Alfr3d</string>
     <string name="dummy_button">Dummy Button</string>
+    <string name="settings_button">Settings</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- Settings -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="url_string">Alfr3d Url</string>
+    <string name="default_url">no url defined</string>
+    <string name="host_settings">Host Settings</string>
 
 </resources>

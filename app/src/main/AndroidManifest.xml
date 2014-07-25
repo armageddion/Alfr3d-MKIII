@@ -29,9 +29,14 @@
             android:label="@string/title_activity_main"
             android:parentActivityName=".SplashActivity"
             android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="littl31.alfr3d.SplashActivity" />
+                android:value="littl31.alfr3d.MainActivity" />
         </activity>
     </application>
 
