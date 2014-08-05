@@ -50,25 +50,6 @@
                 android:text="@string/settings_button" />
 
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/fullscreen_content_controls2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:background="@color/black_overlay"
-            tools:ignore="UselessParent">
-
-            <Button
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="New Button"
-                android:onClick="menuButt"
-                android:id="@+id/button" />
-        </LinearLayout>
-
     </FrameLayout>
 
 </FrameLayout>

@@ -6,16 +6,28 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import littl31.alfr3d.R;
 
@@ -126,6 +138,15 @@ public class MainActivity extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        if (isConnectedToHome()) {
+            TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
+            Alfr3dURLView.setText("Welcome Home");
+        }
+        else{
+            TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
+            Alfr3dURLView.setText("Alfr3d\n-_-");
+        }
     }
 
     @Override
@@ -135,7 +156,36 @@ public class MainActivity extends Activity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(2000);
+        delayedHide(1000);
+
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+
+                float curSpeed = location.getSpeed();
+                if (curSpeed > 0.0 ){
+                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
+                    Alfr3dURLView.setText("Current Speed: " + curSpeed);
+                }
+                else {
+                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
+                    Alfr3dURLView.setText("Alfr3d\n-_-");
+                }
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     /**
@@ -228,5 +278,31 @@ public class MainActivity extends Activity {
 
     public void settings(View view){
         startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    public void menuButt(View view) {
+        mSystemUiHider.show();
+    }
+
+    // Find out if we are connected to Dro3d network
+    public boolean isConnectedToHome() {
+        String ssid = null;
+
+        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String homeSSID= mySharedPreferences.getString("home_ssid","ssid not set");
+
+        ConnectivityManager cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (activeNetwork.isConnected()) {
+            final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+            final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+            if (connectionInfo != null) {
+                ssid = connectionInfo.getSSID();
+            }
+        }
+
+        return (ssid.equals(homeSSID));
+
     }
 }

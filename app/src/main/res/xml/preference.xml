@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/host_settings">
+
+        <EditTextPreference
+            android:key="alfr3d_url_preference"
+            android:title="@string/url_string"
+            android:summary="Set Alfr3d URL"
+            android:dialogTitle="@string/url_string"
+            android:hint="@string/default_url" />
+        <EditTextPreference
+            android:key="@string/home_ssid"
+            android:title="@string/home_ssid"
+            android:summary="Set home network name"
+            android:dialogTitle="@string/home_ssid"
+            android:hint="Dro3d" />
+        <CheckBoxPreference
+            android:key="node_enabled"
+            android:title="Enable Node"
+            android:summary="Uncheck to use CGI" />
+    </PreferenceCategory>
+</PreferenceScreen>
