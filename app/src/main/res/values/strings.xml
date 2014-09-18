@@ -16,5 +16,8 @@
     <string name="default_url">no url defined</string>
     <string name="host_settings">Host Settings</string>
     <string name="home_ssid">Home SSID</string>
+    <string name="title_activity_fs__play">FS_Play</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

@@ -1,14 +1,14 @@
 package littl31.alfr3d;
 
-import littl31.alfr3d.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +21,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
@@ -29,134 +31,37 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import littl31.alfr3d.R;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
  *
- * @see SystemUiHider
  */
 public class MainActivity extends Activity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 10000;
-
-    /**
-     * If set, will toggle the system UI visibility upon interaction. Otherwise,
-     * will show the system UI visibility upon interaction.
-     */
-    private static final boolean TOGGLE_ON_CLICK = false;
-
-    /**
-     * The flags to pass to {@link SystemUiHider#getInstance}.
-     */
-    private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-
-    /**
-     * The instance of the {@link SystemUiHider} for this activity.
-     */
-    private SystemUiHider mSystemUiHider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        setupActionBar();
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.hide();
+        WifiReceiver wifi1 = new WifiReceiver();
 
-        final View controlsView = findViewById(R.id.fullscreen_content_controls);
-        final View contentView = findViewById(R.id.fullscreen_content);
-
-        // Set up an instance of SystemUiHider to control the system UI for
-        // this activity.
-        mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
-        mSystemUiHider.setup();
-        mSystemUiHider
-                .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
-                    // Cached values.
-                    int mControlsHeight;
-                    int mShortAnimTime;
-
-                    @Override
-                    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-                    public void onVisibilityChange(boolean visible) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-                            // If the ViewPropertyAnimator API is available
-                            // (Honeycomb MR2 and later), use it to animate the
-                            // in-layout UI controls at the bottom of the
-                            // screen.
-                            if (mControlsHeight == 0) {
-                                mControlsHeight = controlsView.getHeight();
-                            }
-                            if (mShortAnimTime == 0) {
-                                mShortAnimTime = getResources().getInteger(
-                                        android.R.integer.config_shortAnimTime);
-                            }
-                            controlsView.animate()
-                                    .translationY(visible ? 0 : mControlsHeight)
-                                    .setDuration(mShortAnimTime);
-                        } else {
-                            // If the ViewPropertyAnimator APIs aren't
-                            // available, simply show or hide the in-layout UI
-                            // controls.
-                            controlsView.setVisibility(visible ? View.VISIBLE : View.GONE);
-                        }
-
-                        if (visible && AUTO_HIDE) {
-                            // Schedule a hide().
-                            delayedHide(AUTO_HIDE_DELAY_MILLIS);
-                        }
-                    }
-                });
-
-        // Set up the user interaction to manually show or hide the system UI.
-        contentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TOGGLE_ON_CLICK) {
-                    mSystemUiHider.toggle();
-                } else {
-                    mSystemUiHider.show();
-                }
-            }
-        });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-
-        if (isConnectedToHome()) {
-            TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
-            Alfr3dURLView.setText("Welcome Home");
-        }
-        else{
-            TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
-            Alfr3dURLView.setText("Alfr3d\n-_-");
-        }
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(1000);
 
         // Acquire a reference to the system Location Manager
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -188,15 +93,11 @@ public class MainActivity extends Activity {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void setupActionBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.fs__play, menu);
+        return true;
     }
 
     @Override
@@ -218,43 +119,27 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
 
-    Handler mHideHandler = new Handler();
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mSystemUiHider.hide();
-        }
-    };
+        View decorView = getWindow().getDecorView();
 
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+        if (hasFocus) {
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 
-    public void dummy_dialog(View view) {
+    public void custom(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Title");
-        alert.setMessage("Message");
+        alert.setTitle("Custom");
+        alert.setMessage("Command");
 
         // Set an EditText view to get user input
         final EditText input = new EditText(this);
@@ -264,6 +149,8 @@ public class MainActivity extends Activity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 // Do something with value!
+                // TODO: send custom command to Alfr3d
+                sendButtonCommand(value);
             }
         });
 
@@ -276,12 +163,97 @@ public class MainActivity extends Activity {
         alert.show();
     }
 
+    public void help(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Help");
+        alert.setMessage("Available custom commands are:\n" +
+                "Hello\n" +
+                "Blink\n" +
+                "welcomehome\n" +
+                "reboot");
+
+        alert.show();
+    }
+
     public void settings(View view){
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    public void menuButt(View view) {
-        mSystemUiHider.show();
+//    public void menuButt(View view) {
+//        Intent fs_play = new Intent(this, FS_Play.class);
+//        startActivity(fs_play);
+//    }
+//
+//    public void fs_play(View view) {
+//        Intent fs_play = new Intent(this, FS_Play.class);
+//        startActivity(fs_play);
+//    }
+
+    public void lightsOn(View view) {
+        // TODO: send RPC call to Alfr3d to fire up the lights
+        sendButtonCommand("Hello");
+    }
+
+    public void lightsOff(View view) {
+        // TODO: send RPC call to Alfr3d to shut the lights
+    }
+
+    // send commands to Alfr3d
+    public void sendButtonCommand(String Command) {
+        // Do something in response to button
+        String message = Command;
+
+        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String alfr3d_url= mySharedPreferences.getString("alfr3d_url_preference","url not set");
+        String full_alfr3d_call = alfr3d_url+"/cgi-bin/alfr3d.cgi?command="+message;
+
+        boolean node_enabled = mySharedPreferences.getBoolean("node_enabled",false);
+        if (node_enabled == true)
+        {
+            //TODO Finish this bit
+            full_alfr3d_call = alfr3d_url+"/complete this bit when you have it working in node";
+        }
+
+
+        // curl: "http://alfr3d.no-ip.org/cgi-bin/test2.py?command=Blink"
+        if (!full_alfr3d_call.substring(0,7).equals("http://"))
+        {
+            full_alfr3d_call = "http://"+full_alfr3d_call;
+        }
+
+        final String finalCall = full_alfr3d_call;
+
+        new Thread() {
+            public void run() {
+                try{
+                    HttpClient httpclient = new DefaultHttpClient();
+                    HttpResponse response;
+                    String responseString = null;
+                    try {
+                        response = httpclient.execute(new HttpGet(finalCall));
+                        StatusLine statusLine = response.getStatusLine();
+                        if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                            ByteArrayOutputStream out = new ByteArrayOutputStream();
+                            response.getEntity().writeTo(out);
+                            out.close();
+                            responseString = out.toString();
+                        } else{
+                            //Closes the connection.
+                            response.getEntity().getContent().close();
+                            throw new IOException(statusLine.getReasonPhrase());
+                        }
+                    } catch (ClientProtocolException e) {
+                        //TODO Handle problems..
+                    } catch (IOException e) {
+                        //TODO Handle problems..
+                    }
+                }
+                catch (Exception e) {
+                    Log.e("tag", e.getMessage());
+                }
+            }
+        }.start();
     }
 
     // Find out if we are connected to Dro3d network
@@ -305,4 +277,29 @@ public class MainActivity extends Activity {
         return (ssid.equals(homeSSID));
 
     }
+
+    public class WifiReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = conMan.getActiveNetworkInfo();
+            if (netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI)
+                //Log.d("WifiReceiver", "Have Wifi Connection");
+                if (isConnectedToHome()) {
+                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
+                    Alfr3dURLView.setText("Welcome Home");
+                }
+                else{
+                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
+                    Alfr3dURLView.setText("Alfr3d\n-_-");
+                }
+            else{
+                //Log.d("WifiReceiver", "Don't have Wifi Connection");
+                TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
+                Alfr3dURLView.setText("Alfr3d\n-_-");
+            }
+        }
+    };
 }
+

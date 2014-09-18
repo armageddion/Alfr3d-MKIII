@@ -28,7 +28,6 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_main"
             android:parentActivityName=".SplashActivity"
             android:theme="@style/FullscreenTheme" >
@@ -41,6 +40,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="littl31.alfr3d.MainActivity" />
         </activity>
+        <activity
+            android:name=".FS_Play"
+            android:label="@string/title_activity_fs__play"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="littl31.alfr3d.MainActivity" />
+        </activity>
+
+        <!-- Receive Wi-Fi connection state changes -->
+        <receiver android:name=".MainActivity$WifiReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

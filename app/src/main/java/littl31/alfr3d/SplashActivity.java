@@ -16,10 +16,7 @@ import android.widget.ImageView;
 
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- *
- * @see SystemUiHider
+ * Quick, short splash screen
  */
 public class SplashActivity extends Activity {
 
