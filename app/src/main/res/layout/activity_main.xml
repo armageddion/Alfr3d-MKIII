@@ -21,41 +21,6 @@
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
 
-    <LinearLayout android:id="@+id/fullscreen_content_controls"
-        style="?metaButtonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:background="@color/black_overlay"
-        android:orientation="horizontal"
-        tools:ignore="UselessParent">
-
-        <Button android:id="@+id/custom_button"
-            style="?metaButtonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="custom"
-            android:text="Custom" />
-
-        <Button android:id="@+id/help_button"
-            style="?metaButtonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="help"
-            android:text="Help" />
-
-        <Button android:id="@+id/settings_button"
-            style="?metaButtonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="settings"
-            android:text="@string/settings_button" />
-
-    </LinearLayout>
-
     <LinearLayout android:id="@+id/light_control"
         style="?metaButtonBarStyle"
         android:layout_width="match_parent"
@@ -70,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Lights On"
+            android:text="@string/lightsOn_button"
             android:onClick="lightsOn"/>
 
         <Button android:id="@+id/lightsOff_button"
@@ -78,8 +43,65 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Lights Off"
+            android:text="@string/lightsOff_button"
             android:onClick="lightsOff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/black_overlay"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView android:id="@+id/alfr3d_call"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            android:textColor="#33b5e5"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="center_vertical|start"
+            android:text="@string/dummy_content"
+            style="@style/ButtonBarButton"
+            android:textAlignment="gravity" />
+
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button android:id="@+id/custom_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="custom"
+                android:text="@string/custom_button" />
+
+            <Button android:id="@+id/help_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="help"
+                android:text="@string/help_button" />
+
+            <Button android:id="@+id/settings_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="settings"
+                android:text="@string/settings_button" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

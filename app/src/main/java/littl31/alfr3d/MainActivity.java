@@ -145,11 +145,10 @@ public class MainActivity extends Activity {
         final EditText input = new EditText(this);
         alert.setView(input);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                // Do something with value!
-                // TODO: send custom command to Alfr3d
+                // Send custom command to Alfr3d
                 sendButtonCommand(value);
             }
         });
@@ -206,7 +205,25 @@ public class MainActivity extends Activity {
 
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String alfr3d_url= mySharedPreferences.getString("alfr3d_url_preference","url not set");
-        String full_alfr3d_call = alfr3d_url+"/cgi-bin/alfr3d.cgi?command="+message;
+        String full_alfr3d_call = alfr3d_url;
+
+        String method = mySharedPreferences.getString("method","-1");
+
+        if (method.equals("CGI"))
+        {
+            full_alfr3d_call = alfr3d_url + "/cgi-bin/alfr3d.cgi?command=" + message;
+        }
+        else if (method.equals("Node.js"))
+        {
+            // TODO: implement Node properly
+            full_alfr3d_call = alfr3d_url + ":1337/" + message;
+        }
+        else if (method.equals("BottleRPC"))
+        {
+            // TODO: complete bottle implementation
+            full_alfr3d_call = alfr3d_url + ":8080/" + message;
+        }
+
 
         boolean node_enabled = mySharedPreferences.getBoolean("node_enabled",false);
         if (node_enabled == true)
@@ -215,14 +232,15 @@ public class MainActivity extends Activity {
             full_alfr3d_call = alfr3d_url+"/complete this bit when you have it working in node";
         }
 
-
         // curl: "http://alfr3d.no-ip.org/cgi-bin/test2.py?command=Blink"
-        if (!full_alfr3d_call.substring(0,7).equals("http://"))
+        if (!full_alfr3d_call.substring(0,7).equalsIgnoreCase("http://"))
         {
             full_alfr3d_call = "http://"+full_alfr3d_call;
         }
 
         final String finalCall = full_alfr3d_call;
+        TextView Alfr3dURLView = (TextView) findViewById(R.id.alfr3d_call);
+        Alfr3dURLView.setText(full_alfr3d_call);
 
         new Thread() {
             public void run() {

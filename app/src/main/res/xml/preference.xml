@@ -16,9 +16,17 @@
             android:summary="Set home network name"
             android:dialogTitle="@string/home_ssid"
             android:hint="Dro3d" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Method">
         <CheckBoxPreference
             android:key="node_enabled"
             android:title="Enable Node"
             android:summary="Uncheck to use CGI" />
+        <ListPreference
+            android:key="method"
+            android:title="Connection Method"
+            android:summary="Select connection method"
+            android:entries="@array/conn_methods"
+            android:entryValues="@array/conn_methods"/>
     </PreferenceCategory>
 </PreferenceScreen>

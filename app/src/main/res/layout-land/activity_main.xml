@@ -18,11 +18,52 @@
         android:gravity="center"
         android:text="@string/dummy_content" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <LinearLayout android:id="@+id/light_control"
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@color/black_overlay"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <Button android:id="@+id/lightsOn_button"
+            style="?metaButtonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lightsOn_button"
+            android:onClick="lightsOn"/>
+
+        <Button android:id="@+id/lightsOff_button"
+            style="?metaButtonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lightsOff_button"
+            android:onClick="lightsOff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/black_overlay"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView android:id="@+id/alfr3d_call"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            android:textColor="#33b5e5"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="center_vertical|start"
+            android:text="@string/dummy_content"
+            style="@style/ButtonBarButton"
+            android:textAlignment="gravity" />
 
         <LinearLayout android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
@@ -33,13 +74,21 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
-            <Button android:id="@+id/dummy_button"
+            <Button android:id="@+id/custom_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="dummy_dialog"
-                android:text="@string/dummy_button" />
+                android:onClick="custom"
+                android:text="@string/custom_button" />
+
+            <Button android:id="@+id/help_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="help"
+                android:text="@string/help_button" />
 
             <Button android:id="@+id/settings_button"
                 style="?metaButtonBarButtonStyle"
@@ -50,6 +99,6 @@
                 android:text="@string/settings_button" />
 
         </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
 
 </FrameLayout>

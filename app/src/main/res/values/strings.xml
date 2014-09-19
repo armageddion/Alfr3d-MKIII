@@ -9,6 +9,10 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="settings_button">Settings</string>
     <string name="dummy_content">Alfr3d</string>
+    <string name="lightsOn_button">Lights On</string>
+    <string name="lightsOff_button">Lights Off</string>
+    <string name="custom_button">Custom</string>
+    <string name="help_button">Help</string>
 
     <!-- Settings -->
     <string name="title_activity_settings">Settings</string>
