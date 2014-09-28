@@ -1,4 +1,4 @@
-package littl31.alfr3d;
+package com.littl31.alfr3d;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -30,6 +30,7 @@ import android.support.v4.app.NavUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -42,12 +43,19 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import littl31.alfr3d.R;
+import com.littl31.alfr3d.R;
+import com.littl31.alfr3d.util.NetwrokChangeReceiver;
+
 
 /**
  *
  */
 public class MainActivity extends Activity {
+
+
+    // detect changes in wifi connectivity so we can know when we are in Alfr3d's home
+    NetwrokChangeReceiver wifi1 = new NetwrokChangeReceiver();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +63,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        WifiReceiver wifi1 = new WifiReceiver();
+        registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
     }
 
@@ -100,24 +108,24 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            // TODO: If Settings has multiple levels, Up should navigate up
-            // that hierarchy.
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == android.R.id.home) {
+//            // This ID represents the Home or Up button. In the case of this
+//            // activity, the Up button is shown. Use NavUtils to allow users
+//            // to navigate up one level in the application structure. For
+//            // more details, see the Navigation pattern on Android Design:
+//            //
+//            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+//            //
+//            // TODO: If Settings has multiple levels, Up should navigate up
+//            // that hierarchy.
+//            NavUtils.navigateUpFromSameTask(this);
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -134,6 +142,7 @@ public class MainActivity extends Activity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
+
 
     public void custom(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -198,6 +207,39 @@ public class MainActivity extends Activity {
         // TODO: send RPC call to Alfr3d to shut the lights
     }
 
+    public void RF1_toggle(View view){
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+
+        if (on) {
+            sendButtonCommand("RF1ON");
+        } else {
+            sendButtonCommand("RF1OFF");
+        }
+    }
+
+    public void RF2_toggle(View view){
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+
+        if (on) {
+            sendButtonCommand("RF2ON");
+        } else {
+            sendButtonCommand("RF2OFF");
+        }
+    }
+
+    public void RF3_toggle(View view){
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+
+        if (on) {
+            sendButtonCommand("RF3ON");
+        } else {
+            sendButtonCommand("RF3OFF");
+        }
+    }
+
     // send commands to Alfr3d
     public void sendButtonCommand(String Command) {
         // Do something in response to button
@@ -206,6 +248,11 @@ public class MainActivity extends Activity {
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String alfr3d_url= mySharedPreferences.getString("alfr3d_url_preference","url not set");
         String full_alfr3d_call = alfr3d_url;
+        Log.d("Main", "Alfr3d URL:"+alfr3d_url);
+
+        //TEMP DEBUGING STUFF>>>
+        String homeSSID = mySharedPreferences.getString("home_ssid_preference","ssid not set");
+        Log.d("Main", "Home SSID:"+homeSSID);
 
         String method = mySharedPreferences.getString("method","-1");
 
@@ -273,51 +320,5 @@ public class MainActivity extends Activity {
             }
         }.start();
     }
-
-    // Find out if we are connected to Dro3d network
-    public boolean isConnectedToHome() {
-        String ssid = null;
-
-        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String homeSSID= mySharedPreferences.getString("home_ssid","ssid not set");
-
-        ConnectivityManager cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (activeNetwork.isConnected()) {
-            final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
-            final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
-            if (connectionInfo != null) {
-                ssid = connectionInfo.getSSID();
-            }
-        }
-
-        return (ssid.equals(homeSSID));
-
-    }
-
-    public class WifiReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = conMan.getActiveNetworkInfo();
-            if (netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI)
-                //Log.d("WifiReceiver", "Have Wifi Connection");
-                if (isConnectedToHome()) {
-                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
-                    Alfr3dURLView.setText("Welcome Home");
-                }
-                else{
-                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
-                    Alfr3dURLView.setText("Alfr3d\n-_-");
-                }
-            else{
-                //Log.d("WifiReceiver", "Don't have Wifi Connection");
-                TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
-                Alfr3dURLView.setText("Alfr3d\n-_-");
-            }
-        }
-    };
 }
 

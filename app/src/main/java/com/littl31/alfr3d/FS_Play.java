@@ -1,12 +1,16 @@
-package littl31.alfr3d;
+package com.littl31.alfr3d;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
-import littl31.alfr3d.R;
+import com.littl31.alfr3d.R;
 
 public class FS_Play extends Activity {
 
@@ -51,4 +55,49 @@ public class FS_Play extends Activity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
+
+    public void custom(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Custom");
+        alert.setMessage("Command");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                // Send custom command to Alfr3d
+                //sendButtonCommand(value);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    public void help(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Help");
+        alert.setMessage("Available custom commands are:\n" +
+                "Hello\n" +
+                "Blink\n" +
+                "welcomehome\n" +
+                "reboot");
+
+        alert.show();
+    }
+
+    public void settings(View view){
+        startActivity(new Intent(this, SettingsActivity.class));
+    }
+
 }

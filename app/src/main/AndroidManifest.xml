@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="littl31.alfr3d" >
+    package="com.littl31.alfr3d" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -50,7 +50,7 @@
         </activity>
 
         <!-- Receive Wi-Fi connection state changes -->
-        <receiver android:name=".MainActivity$WifiReceiver" >
+        <receiver android:name=".util.NetwrokChangeReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

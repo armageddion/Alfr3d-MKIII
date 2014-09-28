@@ -1,10 +1,12 @@
-package littl31.alfr3d;
+package com.littl31.alfr3d;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+
+import com.littl31.alfr3d.R;
 
 
 public class SettingsActivity extends PreferenceActivity {

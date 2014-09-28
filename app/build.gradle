@@ -3,19 +3,20 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 20
     buildToolsVersion "20"
-
     defaultConfig {
-        applicationId "littl31.alfr3d"
+        applicationId 'com.littl31.alfr3d'
         minSdkVersion 19
         targetSdkVersion 20
         versionCode 1
-        versionName "3.0.4"
+        versionName "3.0.5"
     }
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
     }
 }
 

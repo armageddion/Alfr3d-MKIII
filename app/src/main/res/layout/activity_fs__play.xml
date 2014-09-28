@@ -4,13 +4,68 @@
     android:layout_height="match_parent"
 
     android:background="@color/alfr3d_blue"
-    tools:context="littl31.alfr3d.FS_Play">
+    tools:context="com.littl31.alfr3d.FS_Play">
 
     <TextView
         android:text="@string/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/black_overlay"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
+        <TextView android:id="@+id/alfr3d_call"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            android:textColor="#33b5e5"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="center_vertical|start"
+            android:text="@string/dummy_content"
+            style="@style/ButtonBarButton"
+            android:textAlignment="gravity" />
+
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button android:id="@+id/custom_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="custom"
+                android:text="@string/custom_button" />
+
+            <Button android:id="@+id/help_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="help"
+                android:text="@string/help_button" />
+
+            <Button android:id="@+id/settings_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="settings"
+                android:text="@string/settings_button" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

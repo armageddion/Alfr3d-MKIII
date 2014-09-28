@@ -11,7 +11,7 @@
             android:dialogTitle="@string/url_string"
             android:hint="@string/default_url" />
         <EditTextPreference
-            android:key="@string/home_ssid"
+            android:key="home_ssid_preference"
             android:title="@string/home_ssid"
             android:summary="Set home network name"
             android:dialogTitle="@string/home_ssid"
