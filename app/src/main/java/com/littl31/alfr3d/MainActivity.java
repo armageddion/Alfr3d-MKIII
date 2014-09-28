@@ -200,7 +200,6 @@ public class MainActivity extends Activity {
 
     public void lightsOn(View view) {
         // TODO: send RPC call to Alfr3d to fire up the lights
-        sendButtonCommand("Hello");
     }
 
     public void lightsOff(View view) {
@@ -238,6 +237,18 @@ public class MainActivity extends Activity {
         } else {
             sendButtonCommand("RF3OFF");
         }
+    }
+
+    public void speakWeather(View view){
+        sendButtonCommand("speak/speakWeather");
+    }
+
+    public void speakTime(View view){
+        sendButtonCommand("speak/speakTime");
+    }
+
+    public void reboot(View view){
+        sendButtonCommand("reboot");
     }
 
     // send commands to Alfr3d

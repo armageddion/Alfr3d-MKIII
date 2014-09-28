@@ -24,14 +24,14 @@ public class NetwrokChangeReceiver extends BroadcastReceiver{
 
         if(status.equals("Wifi enabled")) {
             if (NetworkUtil.isConnectedToHome(context)) {
-                Toast.makeText(context, "Welcome Home", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Welcome Home", Toast.LENGTH_LONG).show();
                 Intent main = new Intent(context, MainActivity.class);
                 main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(main);
             }
         }
         else{
-            Toast.makeText(context, "Not Connected to Home", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Not Connected to Home", Toast.LENGTH_LONG).show();
             Intent fs_play = new Intent(context, FS_Play.class);
             fs_play.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(fs_play);

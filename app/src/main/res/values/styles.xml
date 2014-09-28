@@ -34,6 +34,9 @@
         <item name="android:background">@android:drawable/bottom_bar</item>
     </style>
 
-    <style name="ButtonBarButton" />
+    <style name="ButtonBarButton">
+        <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
 </resources>

@@ -11,8 +11,9 @@
     <string name="dummy_content">Alfr3d</string>
     <string name="lightsOn_button">Lights On</string>
     <string name="lightsOff_button">Lights Off</string>
-    <string name="RF1On_button">RF1 On</string>
-    <string name="RF1Off_button">RF1 Off</string>
+    <string name="weather_button">Weather</string>
+    <string name="time_button">Time</string>
+    <string name="reboot_button">Reboot</string>
     <string name="custom_button">Custom</string>
     <string name="help_button">Help</string>
 
