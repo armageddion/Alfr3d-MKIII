@@ -2,25 +2,25 @@
     android:oneshot="true" >
 
     <item
-        android:drawable="@drawable/littl3_1_1"
+        android:drawable="@drawable/alfr3d_splash_0"
+        android:duration="500"/>
+    <item
+        android:drawable="@drawable/alfr3d_splash_1"
         android:duration="100"/>
     <item
-        android:drawable="@drawable/littl3_1_2"
+        android:drawable="@drawable/alfr3d_splash_2"
         android:duration="100"/>
     <item
-        android:drawable="@drawable/littl3_1_3"
+        android:drawable="@drawable/alfr3d_splash_3"
         android:duration="100"/>
     <item
-        android:drawable="@drawable/littl3_1_4"
+        android:drawable="@drawable/alfr3d_splash_4"
         android:duration="100"/>
     <item
-        android:drawable="@drawable/littl3_1_5"
+        android:drawable="@drawable/alfr3d_splash_5"
         android:duration="100"/>
     <item
-        android:drawable="@drawable/littl3_1_6"
-        android:duration="100"/>
-    <item
-        android:drawable="@drawable/littl3_1_7"
-        android:duration="100"/>
+        android:drawable="@drawable/alfr3d_splash_6"
+        android:duration="500"/>
 
 </animation-list>

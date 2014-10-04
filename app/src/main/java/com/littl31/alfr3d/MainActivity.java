@@ -63,14 +63,14 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-
+        //registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
+        /*
         // Acquire a reference to the system Location Manager
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -99,6 +99,7 @@ public class MainActivity extends Activity {
 
         // Register the listener with the Location Manager to receive location updates
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        */
     }
 
     @Override
@@ -143,6 +144,33 @@ public class MainActivity extends Activity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 
+    protected void onPause() {
+        super.onStop();
+
+        try {
+            unregisterReceiver(wifi1);
+        } catch (Exception e) {
+            Log.e("onPause", getClass()+" Releasing receivers-"+e.getMessage());
+        }
+    }
+
+
+    protected void onResume() {
+        registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        try {
+            unregisterReceiver(wifi1);
+        } catch (Exception e) {
+            Log.e("onDestroy", getClass()+" Releasing receivers-"+e.getMessage());
+        }
+
+    }
 
     public void custom(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -199,11 +227,22 @@ public class MainActivity extends Activity {
 //    }
 
     public void lightsOn(View view) {
-        // TODO: send RPC call to Alfr3d to fire up the lights
+        sendButtonCommand("arduino/LightsOn");
     }
 
     public void lightsOff(View view) {
-        // TODO: send RPC call to Alfr3d to shut the lights
+        sendButtonCommand("arduino/LightsOff");
+    }
+
+    public void Lights_toggle(View view){
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+
+        if (on) {
+            sendButtonCommand("arduino/LightsOn");
+        } else {
+            sendButtonCommand("arduino/LightsOff");
+        }
     }
 
     public void RF1_toggle(View view){
@@ -211,9 +250,9 @@ public class MainActivity extends Activity {
         boolean on = ((ToggleButton) view).isChecked();
 
         if (on) {
-            sendButtonCommand("RF1ON");
+            sendButtonCommand("arduino/RF1ON");
         } else {
-            sendButtonCommand("RF1OFF");
+            sendButtonCommand("arduino/RF1OFF");
         }
     }
 
@@ -222,9 +261,9 @@ public class MainActivity extends Activity {
         boolean on = ((ToggleButton) view).isChecked();
 
         if (on) {
-            sendButtonCommand("RF2ON");
+            sendButtonCommand("arduino/RF2ON");
         } else {
-            sendButtonCommand("RF2OFF");
+            sendButtonCommand("arduino/RF2OFF");
         }
     }
 
@@ -233,14 +272,14 @@ public class MainActivity extends Activity {
         boolean on = ((ToggleButton) view).isChecked();
 
         if (on) {
-            sendButtonCommand("RF3ON");
+            sendButtonCommand("arduino/RF3ON");
         } else {
-            sendButtonCommand("RF3OFF");
+            sendButtonCommand("arduino/RF3OFF");
         }
     }
 
     public void speakWeather(View view){
-        sendButtonCommand("speak/speakWeather");
+        sendButtonCommand("speak/speakWeather_short");
     }
 
     public void speakTime(View view){

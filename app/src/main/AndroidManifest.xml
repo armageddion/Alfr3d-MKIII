@@ -48,13 +48,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="littl31.alfr3d.MainActivity" />
         </activity>
+        <activity
+            android:name=".AwayActivity"
+            android:label="@string/title_activity_away"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="littl31.alfr3d.MainActivity" />
+        </activity>
 
         <!-- Receive Wi-Fi connection state changes -->
+        <!--
         <receiver android:name=".util.NetwrokChangeReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        -->
 
     </application>
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.littl31.alfr3d.AwayActivity;
 import com.littl31.alfr3d.FS_Play;
 import com.littl31.alfr3d.MainActivity;
 import com.littl31.alfr3d.R;
@@ -32,9 +33,9 @@ public class NetwrokChangeReceiver extends BroadcastReceiver{
         }
         else{
             //Toast.makeText(context, "Not Connected to Home", Toast.LENGTH_LONG).show();
-            Intent fs_play = new Intent(context, FS_Play.class);
-            fs_play.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(fs_play);
+            Intent away = new Intent(context, AwayActivity.class);
+            away.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(away);
         }
     }
 }
