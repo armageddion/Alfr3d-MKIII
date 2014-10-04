@@ -1,0 +1,178 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    android:background="@color/alfr3d_blue"
+    tools:context=".MainActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <TextView android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        android:textColor="#33b5e5"
+        android:textStyle="bold"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:text="@string/dummy_content" />
+
+    <LinearLayout android:id="@+id/light_control"
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@color/black_overlay"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            style="?metaButtonBarStyle"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black_overlay">
+
+            <Button android:id="@+id/lightsOn_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/lightsOn_button"
+                android:onClick="lightsOn"/>
+
+            <Button android:id="@+id/lightsOff_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/lightsOff_button"
+                android:onClick="lightsOff"/>
+        </LinearLayout>
+        <LinearLayout
+            style="?metaButtonBarStyle"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black_overlay">
+
+            <ToggleButton android:id="@+id/RF1Button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOn="RF1"
+                android:textOff="RF1"
+                android:onClick="RF1_toggle"/>
+
+            <ToggleButton android:id="@+id/RF2Button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOn="RF2"
+                android:textOff="RF2"
+                android:onClick="RF2_toggle"/>
+
+            <ToggleButton android:id="@+id/RF3Button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOn="RF3"
+                android:textOff="RF3"
+                android:onClick="RF3_toggle"/>
+        </LinearLayout>
+        <LinearLayout
+            style="?metaButtonBarStyle"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black_overlay">
+
+            <Button android:id="@+id/weather_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/weather_button"
+                android:onClick="speakWeather"/>
+
+            <Button android:id="@+id/time_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/time_button"
+                android:onClick="speakTime"/>
+
+            <Button android:id="@+id/reboot_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/reboot_button"
+                android:onClick="reboot"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/black_overlay"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView android:id="@+id/alfr3d_call"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            android:textColor="#33b5e5"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="center_vertical|start"
+            android:text="@string/dummy_content"
+            style="@style/ButtonBarButton"
+            android:textAlignment="gravity" />
+
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button android:id="@+id/custom_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="custom"
+                android:text="@string/custom_button" />
+
+            <Button android:id="@+id/help_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="help"
+                android:text="@string/help_button" />
+
+            <Button android:id="@+id/settings_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="settings"
+                android:text="@string/settings_button" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

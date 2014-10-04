@@ -31,21 +31,21 @@
 
         <ToggleButton android:id="@+id/RF1Button"
             style="@style/toggleButton"
-            android:background="@drawable/alfr3d_rf1"
+            android:background="@drawable/alfr3d_rf1_toggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:onClick="RF1_toggle"/>
 
         <ToggleButton android:id="@+id/RF2Button"
             style="@style/toggleButton"
-            android:background="@drawable/alfr3d_rf2"
+            android:background="@drawable/alfr3d_rf2_toggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:onClick="RF2_toggle"/>
 
         <ToggleButton android:id="@+id/RF3Button"
             style="@style/toggleButton"
-            android:background="@drawable/alfr3d_rf3"
+            android:background="@drawable/alfr3d_rf3_toggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:onClick="RF3_toggle"/>
