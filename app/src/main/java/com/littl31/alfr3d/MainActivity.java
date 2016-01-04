@@ -27,25 +27,26 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import com.littl31.alfr3d.R;
 import com.littl31.alfr3d.util.NetwrokChangeReceiver;
-
 
 /**
  *
@@ -64,6 +65,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         //registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+
     }
 
     @Override
@@ -172,6 +174,13 @@ public class MainActivity extends Activity {
 
     }
 
+    public void home(View view){
+        Intent home = new Intent(this, HomeActivity.class);
+        home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(home);
+    }
+
+    // pop-up dialog to send a custom command
     public void custom(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -199,6 +208,7 @@ public class MainActivity extends Activity {
         alert.show();
     }
 
+    // a rather useless help menu
     public void help(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -212,82 +222,9 @@ public class MainActivity extends Activity {
         alert.show();
     }
 
+    // settings menu
     public void settings(View view){
         startActivity(new Intent(this, SettingsActivity.class));
-    }
-
-//    public void menuButt(View view) {
-//        Intent fs_play = new Intent(this, FS_Play.class);
-//        startActivity(fs_play);
-//    }
-//
-//    public void fs_play(View view) {
-//        Intent fs_play = new Intent(this, FS_Play.class);
-//        startActivity(fs_play);
-//    }
-
-    public void lightsOn(View view) {
-        sendButtonCommand("arduino/LightsOn");
-    }
-
-    public void lightsOff(View view) {
-        sendButtonCommand("arduino/LightsOff");
-    }
-
-    public void Lights_toggle(View view){
-        // Is the toggle on?
-        boolean on = ((ToggleButton) view).isChecked();
-
-        if (on) {
-            sendButtonCommand("arduino/LightsOn");
-        } else {
-            sendButtonCommand("arduino/LightsOff");
-        }
-    }
-
-    public void RF1_toggle(View view){
-        // Is the toggle on?
-        boolean on = ((ToggleButton) view).isChecked();
-
-        if (on) {
-            sendButtonCommand("arduino/RF1ON");
-        } else {
-            sendButtonCommand("arduino/RF1OFF");
-        }
-    }
-
-    public void RF2_toggle(View view){
-        // Is the toggle on?
-        boolean on = ((ToggleButton) view).isChecked();
-
-        if (on) {
-            sendButtonCommand("arduino/RF2ON");
-        } else {
-            sendButtonCommand("arduino/RF2OFF");
-        }
-    }
-
-    public void RF3_toggle(View view){
-        // Is the toggle on?
-        boolean on = ((ToggleButton) view).isChecked();
-
-        if (on) {
-            sendButtonCommand("arduino/RF3ON");
-        } else {
-            sendButtonCommand("arduino/RF3OFF");
-        }
-    }
-
-    public void speakWeather(View view){
-        sendButtonCommand("speak/speakWeather_short");
-    }
-
-    public void speakTime(View view){
-        sendButtonCommand("speak/speakTime");
-    }
-
-    public void reboot(View view){
-        sendButtonCommand("reboot");
     }
 
     // send commands to Alfr3d
@@ -296,79 +233,67 @@ public class MainActivity extends Activity {
         String message = Command;
 
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String alfr3d_url= mySharedPreferences.getString("alfr3d_url_preference","url not set");
+        String alfr3d_url = mySharedPreferences.getString("alfr3d_url_preference", "url not set");
         String full_alfr3d_call = alfr3d_url;
-        Log.d("Main", "Alfr3d URL:"+alfr3d_url);
+        Log.d("Main", "Alfr3d URL:" + alfr3d_url);
 
         //TEMP DEBUGING STUFF>>>
-        String homeSSID = mySharedPreferences.getString("home_ssid_preference","ssid not set");
-        Log.d("Main", "Home SSID:"+homeSSID);
+        String homeSSID = mySharedPreferences.getString("home_ssid_preference", "ssid not set");
+        Log.d("Main", "Home SSID:" + homeSSID);
 
-        String method = mySharedPreferences.getString("method","-1");
+        String method = mySharedPreferences.getString("method", "-1");
 
-        if (method.equals("CGI"))
-        {
+        if (method.equals("CGI")) {
             full_alfr3d_call = alfr3d_url + "/cgi-bin/alfr3d.cgi?command=" + message;
-        }
-        else if (method.equals("Node.js"))
-        {
+        } else if (method.equals("Node.js")) {
             // TODO: implement Node properly
             full_alfr3d_call = alfr3d_url + ":1337/" + message;
-        }
-        else if (method.equals("BottleRPC"))
-        {
+        } else if (method.equals("BottleRPC")) {
             // TODO: complete bottle implementation
             full_alfr3d_call = alfr3d_url + ":8080/" + message;
         }
 
 
-        boolean node_enabled = mySharedPreferences.getBoolean("node_enabled",false);
-        if (node_enabled == true)
-        {
+        boolean node_enabled = mySharedPreferences.getBoolean("node_enabled", false);
+        if (node_enabled == true) {
             //TODO Finish this bit
-            full_alfr3d_call = alfr3d_url+"/complete this bit when you have it working in node";
+            full_alfr3d_call = alfr3d_url + "/complete this bit when you have it working in node";
         }
 
         // curl: "http://alfr3d.no-ip.org/cgi-bin/test2.py?command=Blink"
-        if (!full_alfr3d_call.substring(0,7).equalsIgnoreCase("http://"))
-        {
-            full_alfr3d_call = "http://"+full_alfr3d_call;
+        if (!full_alfr3d_call.substring(0, 7).equalsIgnoreCase("http://")) {
+            full_alfr3d_call = "http://" + full_alfr3d_call;
         }
 
         final String finalCall = full_alfr3d_call;
         TextView Alfr3dURLView = (TextView) findViewById(R.id.alfr3d_call);
         Alfr3dURLView.setText(full_alfr3d_call);
 
-        new Thread() {
-            public void run() {
-                try{
-                    HttpClient httpclient = new DefaultHttpClient();
-                    HttpResponse response;
-                    String responseString = null;
-                    try {
-                        response = httpclient.execute(new HttpGet(finalCall));
-                        StatusLine statusLine = response.getStatusLine();
-                        if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                            ByteArrayOutputStream out = new ByteArrayOutputStream();
-                            response.getEntity().writeTo(out);
-                            out.close();
-                            responseString = out.toString();
-                        } else{
-                            //Closes the connection.
-                            response.getEntity().getContent().close();
-                            throw new IOException(statusLine.getReasonPhrase());
-                        }
-                    } catch (ClientProtocolException e) {
-                        //TODO Handle problems..
-                    } catch (IOException e) {
-                        //TODO Handle problems..
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final TextView mTextView = (TextView) findViewById(R.id.alfr3d_response);
+
+        // log requested message
+        final TextView Alfr3dLog = (TextView) findViewById(R.id.alfr3d_log);
+        Alfr3dLog.append("\n" + message);
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, finalCall,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        mTextView.append("\nResponse is: " + response.substring(0, 500));
                     }
-                }
-                catch (Exception e) {
-                    Log.e("tag", e.getMessage());
-                }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mTextView.append("\nThat didn't work!");
             }
-        }.start();
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
     }
 }
 

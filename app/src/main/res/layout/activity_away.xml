@@ -16,7 +16,7 @@
         android:background="@color/black_overlay">
 
         <ImageButton
-            style="?metaButtonBarButtonStyle"
+            style="@style/ButtonBarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/home_button"
@@ -62,7 +62,7 @@
             android:textAlignment="gravity" />
 
         <LinearLayout android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
+            style="?metaButtonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -72,28 +72,28 @@
 
 
             <ImageButton android:id="@+id/reboot_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alfr3d_reboot"
                 android:onClick="reboot" />
 
             <ImageButton android:id="@+id/custom_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alfr3d_cmd"
                 android:onClick="custom"/>
 
             <ImageButton android:id="@+id/help_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alfr3d_help"
                 android:onClick="help"/>
 
             <ImageButton android:id="@+id/settings_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alfr3d_settings"

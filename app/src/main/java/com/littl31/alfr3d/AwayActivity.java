@@ -57,7 +57,7 @@ public class AwayActivity extends Activity {
     }
 
     public void home(View view){
-        Intent main = new Intent(this, MainActivity.class);
+        Intent main = new Intent(this, HomeActivity.class);
         //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(main);
     }

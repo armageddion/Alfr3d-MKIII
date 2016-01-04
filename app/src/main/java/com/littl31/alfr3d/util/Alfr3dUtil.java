@@ -7,15 +7,14 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.littl31.alfr3d.R;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import com.littl31.alfr3d.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,7 +24,7 @@ import java.io.IOException;
  */
 public class Alfr3dUtil {
 
-    public static void sendButtonCommand(Context context, String Command) {
+    public static void sendButtonCommand(final Context context, String Command) {
         // Do something in response to button
         String message = Command;
 
@@ -72,35 +71,24 @@ public class Alfr3dUtil {
         final String finalCall = full_alfr3d_call;
         Toast.makeText(context, full_alfr3d_call, Toast.LENGTH_LONG).show();
 
-        new Thread() {
-            public void run() {
-                try{
-                    HttpClient httpclient = new DefaultHttpClient();
-                    HttpResponse response;
-                    String responseString = null;
-                    try {
-                        response = httpclient.execute(new HttpGet(finalCall));
-                        StatusLine statusLine = response.getStatusLine();
-                        if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                            ByteArrayOutputStream out = new ByteArrayOutputStream();
-                            response.getEntity().writeTo(out);
-                            out.close();
-                            responseString = out.toString();
-                        } else{
-                            //Closes the connection.
-                            response.getEntity().getContent().close();
-                            throw new IOException(statusLine.getReasonPhrase());
-                        }
-                    } catch (ClientProtocolException e) {
-                        //TODO Handle problems..
-                    } catch (IOException e) {
-                        //TODO Handle problems..
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, finalCall,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Toast.makeText(context, "Response is: "+ response.substring(0,500), Toast.LENGTH_LONG).show();
                     }
-                }
-                catch (Exception e) {
-                    Log.e("tag", e.getMessage());
-                }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "That didn't work!", Toast.LENGTH_LONG).show();
             }
-        }.start();
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
     }
 }

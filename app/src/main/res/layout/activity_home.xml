@@ -1,0 +1,218 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="#000000"
+    tools:context="com.littl31.alfr3d.HomeActivity">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView_bg"
+        android:src="@drawable/alfr3d_background"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        style="?metaButtonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:orientation="vertical"
+        android:background="@color/black_overlay">
+
+        <ImageButton android:id="@+id/home_button"
+            style="@style/Alfr3dButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/alfr3d_home"
+            android:onClick="mainActivity"/>
+
+        <ToggleButton android:id="@+id/lightsOn_button"
+            style="@style/Alfr3dToggleButton"
+            android:background="@drawable/alfr3d_light_toggle_bg"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/alfr3d_light_toggle"
+            android:onClick="Lights_toggle"/>
+
+        <ToggleButton android:id="@+id/RF1Button"
+            style="@style/Alfr3dToggleButton"
+            android:background="@drawable/alfr3d_rf1_toggle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="RF1_toggle"/>
+
+        <ToggleButton android:id="@+id/RF2Button"
+            style="@style/Alfr3dToggleButton"
+            android:background="@drawable/alfr3d_rf2_toggle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="RF2_toggle"/>
+
+        <ToggleButton android:id="@+id/RF3Button"
+            style="@style/Alfr3dToggleButton"
+            android:background="@drawable/alfr3d_rf3_toggle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="RF3_toggle"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageView4"
+        android:src="@drawable/alfr3d_title"
+        android:layout_gravity="end|end"
+        android:paddingEnd="50dp" />
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="83dp"
+        android:id="@+id/imageView3"
+        android:src="@drawable/alfr3d_3_sketch"
+        android:layout_gravity="end|top" />
+
+    <LinearLayout
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/black_overlay"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView android:id="@+id/alfr3d_call"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            android:textColor="#33b5e5"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="center_vertical|start"
+            android:text="@string/dummy_content"
+            android:textAlignment="gravity" />
+
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+
+            <ImageButton android:id="@+id/reboot_button"
+                style="@style/Alfr3dButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/alfr3d_reboot"
+                android:onClick="reboot" />
+
+            <ImageButton android:id="@+id/custom_button"
+                style="@style/Alfr3dButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/alfr3d_cmd"
+                android:onClick="custom"/>
+
+            <ImageButton android:id="@+id/help_button"
+                style="@style/Alfr3dButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/alfr3d_help"
+                android:onClick="help"/>
+
+            <ImageButton android:id="@+id/settings_button"
+                style="@style/Alfr3dButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/alfr3d_settings"
+                android:onClick="settings" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- log text -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="425dp"
+        android:weightSum="1"
+        android:layout_gravity="end|center_vertical">
+
+        <TextView android:id="@+id/alfr3d_log_heading"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:keepScreenOn="true"
+            android:textColor="@color/alfr3d_blue"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:text="Alfr3d Log:"
+            android:textAlignment="gravity"
+            android:gravity="bottom|start"
+            android:layout_gravity="right|top"
+            android:layout_weight="0.1"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="15dp"/>
+
+        <TextView android:id="@+id/alfr3d_log"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:keepScreenOn="true"
+            android:textColor="@color/alfr3d_blue"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:gravity="bottom|end"
+            android:text=""
+            style="@style/ButtonBarButton"
+            android:textAlignment="gravity"
+            android:layout_gravity="right|top"
+            android:layout_weight="0.3"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="5dp"
+            android:paddingBottom="20dp"
+            android:paddingRight="25dp"
+            android:paddingTop="20dp"
+            android:background="@drawable/window_log"/>
+
+        <TextView android:id="@+id/alfr3d_response_heading"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:keepScreenOn="true"
+            android:textColor="@color/alfr3d_blue"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:text="Alfr3d Responses:"
+            android:textAlignment="gravity"
+            android:gravity="bottom|start"
+            android:layout_gravity="right|top"
+            android:layout_weight="0.1"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="15dp" />
+
+        <TextView android:id="@+id/alfr3d_response"
+            android:layout_width="300dp"
+            android:layout_height="180dp"
+            android:keepScreenOn="true"
+            android:textColor="@color/alfr3d_blue"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:text=""
+            android:textAlignment="gravity"
+            android:gravity="bottom|end"
+            android:layout_gravity="bottom|right"
+            android:layout_weight="0.5"
+            android:layout_marginTop="0dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="25dp"
+            android:paddingTop="20dp"
+            android:background="@drawable/window_response"/>
+    </LinearLayout>
+
+</FrameLayout>

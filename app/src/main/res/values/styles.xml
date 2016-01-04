@@ -50,4 +50,15 @@
         <item name="android:textOff"></item>
     </style>
 
+    <style name="Alfr3dButton" parent="Alfr3dTheme">
+        <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Alfr3dToggleButton" parent="Alfr3dButton">
+        <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
+        <item name="android:textOn"></item>
+        <item name="android:textOff"></item>
+    </style>
+
 </resources>

@@ -3,11 +3,12 @@ package com.littl31.alfr3d.util;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.littl31.alfr3d.AwayActivity;
-import com.littl31.alfr3d.FS_Play;
+import com.littl31.alfr3d.HomeActivity;
 import com.littl31.alfr3d.MainActivity;
 import com.littl31.alfr3d.R;
 
@@ -26,16 +27,24 @@ public class NetwrokChangeReceiver extends BroadcastReceiver{
         if(status.equals("Wifi enabled")) {
             if (NetworkUtil.isConnectedToHome(context)) {
                 //Toast.makeText(context, "Welcome Home", Toast.LENGTH_LONG).show();
+                Log.d("NetworkChangeReceiver", "Welcome home");
+                Intent home = new Intent(context, HomeActivity.class);
+                home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(home);
+            }
+            else{
+                Log.d("NetworkChangeReceiver", "Not at home network");
                 Intent main = new Intent(context, MainActivity.class);
-                main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(main);
             }
         }
         else{
-            //Toast.makeText(context, "Not Connected to Home", Toast.LENGTH_LONG).show();
-            Intent away = new Intent(context, AwayActivity.class);
-            away.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(away);
+            //Toast.makeText(context, "Not connected to WiFi", Toast.LENGTH_LONG).show();
+            Log.d("NetworkChangeReceiver", "Not Connected to WiFi");
+            Intent main = new Intent(context, MainActivity.class);
+            //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(main);
         }
     }
 }

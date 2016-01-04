@@ -1,0 +1,53 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:height="180dp"
+    android:width="300dp"
+
+    android:viewportWidth="32"
+    android:viewportHeight="28" >
+
+    <group android:name="window_response_group">
+
+        <!-- first half of the window -->
+        <path android:name="window_response_1"
+            android:strokeWidth="0.1"
+            android:strokeColor="@color/alfr3d_blue"
+            android:pathData="M0,1
+                            l0,21
+                            l5,5
+                            l25,0
+                            l1,-1
+                            l0,-10
+                            l-1,-1"/>
+
+        <!-- second half of the window -->
+        <path android:name="window_response_2"
+            android:strokeWidth="0.1"
+            android:strokeColor="@color/alfr3d_blue"
+            android:pathData="M0,1
+                            l1,-1
+                            l17,0
+                            l1,1
+                            l10,0,
+                            l1,1
+                            l0,12
+                            l1,1"/>
+
+        <!-- some details -->
+        <path android:name="window_response_3"
+            android:strokeWidth="0.1"
+            android:strokeColor="@color/alfr3d_blue"
+            android:pathData="M30.5,25.5
+                              l0,-8
+                              m0,-1
+                              l-0.2,-0.2
+                              M1,0.5
+                              l0.2,0
+                              m0.3,0
+                              l0.2,0
+                              m0.3,0
+                              l15,0
+                              m0.3,0
+                              l0.2,0"/>
+    </group>
+</vector>
