@@ -27,6 +27,8 @@ import com.android.volley.toolbox.Volley;
 import com.littl31.alfr3d.util.Alfr3dUtil;
 import com.littl31.alfr3d.util.NetwrokChangeReceiver;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class HomeActivity extends Activity {
 
     @Override
@@ -37,6 +39,7 @@ public class HomeActivity extends Activity {
 //        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.window_response_anim1);
 //        TextView image1 = (TextView)findViewById(R.id.alfr3d_response);
 //        image1.startAnimation(animation);
+
     }
 
     @Override
@@ -218,17 +221,18 @@ public class HomeActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        mTextView.append("\nResponse is: "+ response.substring(0,500));
+                        Log.d("Response",response);
+                        // display response
+                        mTextView.append("\nResponse is: " + response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                //Log.d("Response", Integer.toString(error.networkResponse.statusCode));
                 mTextView.append("\nThat didn't work!");
             }
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
-
 }

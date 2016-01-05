@@ -21,6 +21,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -37,6 +39,8 @@ import android.widget.ToggleButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -66,49 +70,51 @@ public class MainActivity extends Activity {
 
         //registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
+        //writeStatusLine("initializing...");
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        /*
-        // Acquire a reference to the system Location Manager
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-
-                float curSpeed = location.getSpeed();
-                if (curSpeed > 0.0 ){
-                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
-                    Alfr3dURLView.setText("Current Speed: " + curSpeed);
-                }
-                else {
-                    TextView Alfr3dURLView = (TextView) findViewById(R.id.fullscreen_content);
-                    Alfr3dURLView.setText("Alfr3d\n-_-");
-                }
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-            public void onProviderEnabled(String provider) {}
-
-            public void onProviderDisabled(String provider) {}
-        };
-
-        // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        */
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.fs__play, menu);
-        return true;
+        //writeStatusLine("Done");
+//        // Acquire a reference to the system Location Manager
+//        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+//
+//        // Define a listener that responds to location updates
+//        LocationListener locationListener = new LocationListener() {
+//            public void onLocationChanged(Location location) {
+//                // Called when a new location is found by the network location provider.
+//
+//                float curSpeed = location.getSpeed();
+//                if (curSpeed > 0.0 ){
+//                    Log.d("Main", "Speed: "+curSpeed);
+//                    TextView mGeoSpeedView = (TextView) findViewById(R.id.geoSpeed);
+//                    mGeoSpeedView.setText("Current Speed: " + curSpeed);
+//                }
+//                else {
+//                    Log.d("Main","Speed: Alfr3d-_-");
+//                    TextView mGeoSpeedView = (TextView) findViewById(R.id.geoSpeed);
+//                    mGeoSpeedView.setText("Alfr3d\n-_-");
+//                }
+//
+//                Log.d("Main", "Latitude:"+String.valueOf(location.getLatitude()));
+//                TextView mLatitue = (TextView) findViewById(R.id.geoLatitude);
+//                mLatitue.setText("Lat:"+String.valueOf(location.getLatitude()));
+//                Log.d("Main", "Longitude:"+String.valueOf(location.getLongitude()));
+//                TextView mLongitude = (TextView) findViewById(R.id.geoLongitude);
+//                mLongitude.setText("Long:"+String.valueOf(location.getLongitude()));
+//            }
+//
+//            public void onStatusChanged(String provider, int status, Bundle extras) {}
+//
+//            public void onProviderEnabled(String provider) {}
+//
+//            public void onProviderDisabled(String provider) {}
+//        };
+//
+//        // Register the listener with the Location Manager to receive location updates
+//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
 //    @Override
@@ -155,7 +161,6 @@ public class MainActivity extends Activity {
             Log.e("onPause", getClass()+" Releasing receivers-"+e.getMessage());
         }
     }
-
 
     protected void onResume() {
         registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
@@ -228,6 +233,7 @@ public class MainActivity extends Activity {
     }
 
     // send commands to Alfr3d
+    // TODO finish this
     public void sendButtonCommand(String Command) {
         // Do something in response to button
         String message = Command;
@@ -274,26 +280,41 @@ public class MainActivity extends Activity {
         final TextView mTextView = (TextView) findViewById(R.id.alfr3d_response);
 
         // log requested message
-        final TextView Alfr3dLog = (TextView) findViewById(R.id.alfr3d_log);
-        Alfr3dLog.append("\n" + message);
+        // TODO final TextView Alfr3dLog = (TextView) findViewById(R.id.alfr3d_log);
+        // TODO Alfr3dLog.append("\n" + message);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, finalCall,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        mTextView.append("\nResponse is: " + response.substring(0, 500));
+                        Log.d("Response",response);
+                        // display response
+                        mTextView.append("\nResponse is: " + response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                //Log.d("Response", Integer.toString(error.networkResponse.statusCode));
                 mTextView.append("\nThat didn't work!");
             }
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
 
+    // write string to status window character by character
+    public void writeStatusLine(String line) {
+        final TextView mTextView = (TextView) findViewById(R.id.alfr3d_response);
+        mTextView.append("\n");
+        for (int i = 0; i <= line.length() - 1; ++i) {
+            mTextView.append(line.substring(i,i+1));
+            //delay a random duration
+            try {
+                Thread.sleep(ThreadLocalRandom.current().nextInt(100, 800));
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }
-

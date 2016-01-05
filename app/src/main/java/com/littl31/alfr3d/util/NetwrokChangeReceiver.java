@@ -34,9 +34,9 @@ public class NetwrokChangeReceiver extends BroadcastReceiver{
             }
             else{
                 Log.d("NetworkChangeReceiver", "Not at home network");
-                Intent main = new Intent(context, MainActivity.class);
+                //Intent main = new Intent(context, MainActivity.class);
                 //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(main);
+                //context.startActivity(main);
             }
         }
         else{
