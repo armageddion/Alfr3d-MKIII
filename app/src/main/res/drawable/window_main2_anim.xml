@@ -1,12 +1,12 @@
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/window_response" >
+    android:drawable="@drawable/window_main2" >
     <target
-        android:name="window_response_1"
+        android:name="window_main2_1"
         android:animation="@anim/window_response_anim1" />
     <target
-        android:name="window_response_2"
+        android:name="window_main2_2"
         android:animation="@anim/window_response_anim2" />
     <target
-        android:name="window_response_3"
+        android:name="window_main2_3"
         android:animation="@anim/window_response_anim3" />
 </animated-vector>

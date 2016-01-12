@@ -2,22 +2,40 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="@string/host_settings">
+        android:title="@string/host_settings_home">
 
         <EditTextPreference
-            android:key="alfr3d_url_preference"
-            android:title="@string/url_string"
+            android:key="alfr3d_url_preference_home"
+            android:title="@string/url_string_home"
             android:summary="Set Alfr3d URL"
-            android:dialogTitle="@string/url_string"
+            android:dialogTitle="@string/url_string_home"
             android:hint="@string/default_url" />
         <EditTextPreference
             android:key="home_ssid_preference"
-            android:title="@string/home_ssid"
+            android:title="@string/ssid_home"
             android:summary="Set home network name"
-            android:dialogTitle="@string/home_ssid"
+            android:dialogTitle="@string/ssid_home"
             android:hint="Dro3d" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Method">
+    <PreferenceCategory
+        android:title="@string/host_settings_office">
+
+        <EditTextPreference
+            android:key="alfr3d_url_preference_office"
+            android:title="@string/url_string_office"
+            android:summary="Set Alfr3d Office URL"
+            android:dialogTitle="@string/url_string_office"
+            android:hint="@string/default_url" />
+        <EditTextPreference
+            android:key="office_ssid_preference"
+            android:title="@string/ssid_office"
+            android:summary="Set office network name"
+            android:dialogTitle="@string/ssid_office"
+            android:hint="S3 Group" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Connection Methods">
+
         <CheckBoxPreference
             android:key="node_enabled"
             android:title="Enable Node"

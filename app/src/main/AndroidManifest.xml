@@ -64,5 +64,7 @@
             </intent-filter>
         </receiver>
         -->
+        <activity android:name=".OfficeActivity"></activity>
     </application>
+
 </manifest>

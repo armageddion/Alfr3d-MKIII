@@ -6,8 +6,10 @@
     android:viewportWidth="32"
     android:viewportHeight="20" >
 
-    <path android:strokeWidth="0.1"
+    <path android:name="window_log_1"
+        android:strokeWidth="0.1"
         android:strokeColor="@color/alfr3d_blue"
+        android:trimPathStart="0"
         android:pathData="M2,1
                         l-1,1
                         l0,5
@@ -15,15 +17,12 @@
                         l0,10
                         l1,1
                         l10,0
-                        l1,-1
-                        m0,1
-                        l1,-1
-                        l16,0
-                        l2,-2
-                        "/>
+                        l1,-1"/>
 
-    <path android:strokeWidth="0.1"
+    <path android:name="window_log_2"
+        android:strokeWidth="0.1"
         android:strokeColor="@color/alfr3d_blue"
+        android:trimPathStart="0"
         android:pathData="M1,1
                         l1,-1
                         l16,0
@@ -32,6 +31,24 @@
                         l1,1
                         l0,4
                         l1,1
-                        l0,9"/>
+                        l0,9
+                        l-2,2
+                        l-16,0
+                        l-1,1"/>
+
+    <!-- some details -->
+    <path android:name="window_log_3"
+        android:strokeWidth="0.1"
+        android:strokeColor="@color/alfr3d_blue"
+        android:strokeAlpha="1"
+        android:pathData="M0.5,8
+                        l0,0.2
+                        m0,0.3
+                        l0,8
+                        m0,0.3
+                        l0,0.2
+                        m0,0.3
+                        l0,0.5
+                        l0.1,0.1"/>
 
 </vector>

@@ -14,6 +14,55 @@
         android:scaleType="centerCrop"
         android:layout_gravity="center" />
 
+    <TextView android:id="@+id/test_button1"
+        style="?metaButtonBarButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/alfr3d_a"
+        android:onClick="office" />
+    <TextView android:id="@+id/test_button2"
+        style="?metaButtonBarButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/alfr3d_l"
+        android:onClick="help" />
+    <TextView android:id="@+id/test_button3"
+        style="?metaButtonBarButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/alfr3d_f"
+        android:onClick="show_win1" />
+    <TextView android:id="@+id/test_button4"
+        style="?metaButtonBarButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/alfr3d_r"
+        android:onClick="show_win2" />
+    <TextView android:id="@+id/test_button5"
+        style="?metaButtonBarButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/alfr3d_e"
+        android:onClick="write" />
+    <TextView android:id="@+id/test_button6"
+        style="?metaButtonBarButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/alfr3d_d"
+        android:onClick="write" />
+
     <LinearLayout
         style="?metaButtonBarStyle"
         android:layout_width="wrap_content"
@@ -28,7 +77,6 @@
             android:layout_height="48dp"
             android:src="@drawable/alfr3d_home"
             android:onClick="home"/>
-
     </LinearLayout>
 
     <ImageView
@@ -46,6 +94,23 @@
         android:src="@drawable/alfr3d_3_sketch"
         android:layout_gravity="end|top" />
 
+    <com.littl31.alfr3d.util.TypeWriter
+        android:id="@+id/alfr3d_response_text"
+        android:textColor="@color/alfr3d_blue"
+        android:textStyle="normal"
+        android:textSize="12sp"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="75dp"
+        android:gravity="bottom|end"
+        android:text=""
+        android:textAlignment="gravity"
+        android:paddingBottom="20dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="20dp"/>
+
     <LinearLayout
         style="?metaButtonBarStyle"
         android:layout_width="match_parent"
@@ -55,8 +120,39 @@
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end">
+            <TextView
+                android:id="@+id/alfr3d_win1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_weight="0.5"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="bottom|start"
+                android:text=""
+                android:visibility="gone"
+                android:drawableStart="@drawable/window_main1_anim" />
+            <TextView
+                android:id="@+id/alfr3d_win2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_weight="0.5"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:gravity="bottom|end"
+                android:text=""
+                android:visibility="gone"
+                android:drawableStart="@drawable/window_main2_anim"/>
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/alfr3d_response"
+            android:id="@+id/alfr3d_response_bg"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -66,9 +162,10 @@
             android:text=""
             android:textAlignment="gravity"
             android:paddingBottom="10dp"
-            android:paddingRight="25dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="25dp"
             android:paddingTop="20dp"
-            android:background="@drawable/window_response" />
+            android:drawableStart="@drawable/window_response_anim"/>
 
         <TextView android:id="@+id/alfr3d_call"
             android:layout_width="match_parent"

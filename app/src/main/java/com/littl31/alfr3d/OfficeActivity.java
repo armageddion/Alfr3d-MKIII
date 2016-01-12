@@ -1,23 +1,19 @@
 package com.littl31.alfr3d;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.app.Activity;
 import android.preference.PreferenceManager;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -27,19 +23,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.littl31.alfr3d.util.Alfr3dUtil;
-import com.littl31.alfr3d.util.NetwrokChangeReceiver;
 import com.littl31.alfr3d.util.TypeWriter;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-public class HomeActivity extends Activity {
+public class OfficeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
+        setContentView(R.layout.activity_office);
     }
 
     @Override
@@ -207,13 +198,13 @@ public class HomeActivity extends Activity {
         String message = Command;
 
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String alfr3d_url= mySharedPreferences.getString("alfr3d_url_preference_home","url not set");
+        String alfr3d_url= mySharedPreferences.getString("alfr3d_url_preference_office","url not set");
         String full_alfr3d_call = alfr3d_url;
-        Log.d("Home", "Alfr3d URL:"+alfr3d_url);
+        Log.d("Office", "Alfr3d URL:"+alfr3d_url);
 
-        //TEMP DEBUGING STUFF>>>
-        String homeSSID = mySharedPreferences.getString("home_ssid_preference","ssid not set");
-        Log.d("Home", "Home SSID:"+homeSSID);
+        //TEMP DEBUGGING STUFF>>>
+        String officeSSID = mySharedPreferences.getString("office_ssid_preference","ssid not set");
+        Log.d("Office", "Office SSID:"+officeSSID);
 
         String method = mySharedPreferences.getString("method","-1");
 
@@ -313,3 +304,4 @@ public class HomeActivity extends Activity {
         }
     }
 }
+

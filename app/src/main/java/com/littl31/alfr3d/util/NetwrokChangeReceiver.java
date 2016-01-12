@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.littl31.alfr3d.AwayActivity;
 import com.littl31.alfr3d.HomeActivity;
 import com.littl31.alfr3d.MainActivity;
+import com.littl31.alfr3d.OfficeActivity;
 import com.littl31.alfr3d.R;
 
 /**
@@ -34,6 +35,19 @@ public class NetwrokChangeReceiver extends BroadcastReceiver{
             }
             else{
                 Log.d("NetworkChangeReceiver", "Not at home network");
+                //Intent main = new Intent(context, MainActivity.class);
+                //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //context.startActivity(main);
+            }
+            if (NetworkUtil.isConnectedToOffice(context)) {
+                //Toast.makeText(context, "Welcome Home", Toast.LENGTH_LONG).show();
+                Log.d("NetworkChangeReceiver", "Ready to work");
+                Intent work = new Intent(context, OfficeActivity.class);
+                work.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(work);
+            }
+            else{
+                Log.d("NetworkChangeReceiver", "Not connected to work network");
                 //Intent main = new Intent(context, MainActivity.class);
                 //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 //context.startActivity(main);

@@ -1,5 +1,7 @@
 package com.littl31.alfr3d;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -10,6 +12,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,14 +30,17 @@ import android.preference.PreferenceManager;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +48,9 @@ import android.widget.ToggleButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.android.volley.Request;
@@ -51,22 +62,36 @@ import com.android.volley.toolbox.Volley;
 
 import com.littl31.alfr3d.R;
 import com.littl31.alfr3d.util.NetwrokChangeReceiver;
+import com.littl31.alfr3d.util.TypeWriter;
 
 /**
  *
  */
 public class MainActivity extends Activity {
 
-
     // detect changes in wifi connectivity so we can know when we are in Alfr3d's home
     NetwrokChangeReceiver wifi1 = new NetwrokChangeReceiver();
 
+    // button views.. these will be used by a few methods below
+    private TextView [] buttons = new TextView[6];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        // setup button view array
+        buttons[0] = (TextView) findViewById(R.id.test_button1);
+        buttons[1] = (TextView) findViewById(R.id.test_button2);
+        buttons[2] = (TextView) findViewById(R.id.test_button3);
+        buttons[3] = (TextView) findViewById(R.id.test_button4);
+        buttons[4] = (TextView) findViewById(R.id.test_button5);
+        buttons[5] = (TextView) findViewById(R.id.test_button6);
+
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i].setVisibility(View.GONE);
+        }
 
         //registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
@@ -76,6 +101,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+
+        // create some windows just for fun
+        window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
+        //window_anim((TextView) findViewById(R.id.alfr3d_win1));
+        //window_anim((TextView) findViewById(R.id.alfr3d_win2));
+
+        buttonAnim();
 
         //writeStatusLine("Done");
 //        // Acquire a reference to the system Location Manager
@@ -149,11 +181,16 @@ public class MainActivity extends Activity {
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
+            //window_anim((TextView) findViewById(R.id.alfr3d_win1));
+            //window_anim((TextView) findViewById(R.id.alfr3d_win2));
+        }
     }
 
+    @Override
     protected void onPause() {
-        super.onStop();
+        super.onPause();
 
         try {
             unregisterReceiver(wifi1);
@@ -162,9 +199,13 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
     protected void onResume() {
+        super.onResume();
         registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        super.onRestart();
+        window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
+        //window_anim((TextView) findViewById(R.id.alfr3d_win1));
+        //window_anim((TextView) findViewById(R.id.alfr3d_win2));
     }
 
     @Override
@@ -185,6 +226,27 @@ public class MainActivity extends Activity {
         this.startActivity(home);
     }
 
+    public void office(View view){
+        Intent office = new Intent(this, OfficeActivity.class);
+        office.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(office);
+    }
+
+    public void show_win1(View view) {
+        window_anim((TextView) findViewById(R.id.alfr3d_win1));
+    }
+
+    public void show_win2(View view) {
+        window_anim((TextView) findViewById(R.id.alfr3d_win2));
+    }
+
+
+    public void write(View view){
+        TypeWriter writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
+        //setContentView(writer);
+        writer.animateText("initializing...");
+    }
+
     // pop-up dialog to send a custom command
     public void custom(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -199,6 +261,8 @@ public class MainActivity extends Activity {
         alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
+                TypeWriter writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
+                writer.animateText("Sending custom command: "+value);
                 // Send custom command to Alfr3d
                 sendButtonCommand(value);
             }
@@ -216,6 +280,9 @@ public class MainActivity extends Activity {
     // a rather useless help menu
     public void help(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        TypeWriter writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
+        writer.animateText("Opening help menu");
 
         alert.setTitle("Help");
         alert.setMessage("Available custom commands are:\n" +
@@ -277,7 +344,7 @@ public class MainActivity extends Activity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        final TextView mTextView = (TextView) findViewById(R.id.alfr3d_response);
+        final TextView mTextView = (TextView) findViewById(R.id.alfr3d_response_text);
 
         // log requested message
         // TODO final TextView Alfr3dLog = (TextView) findViewById(R.id.alfr3d_log);
@@ -303,18 +370,91 @@ public class MainActivity extends Activity {
         queue.add(stringRequest);
     }
 
-    // write string to status window character by character
-    public void writeStatusLine(String line) {
-        final TextView mTextView = (TextView) findViewById(R.id.alfr3d_response);
-        mTextView.append("\n");
-        for (int i = 0; i <= line.length() - 1; ++i) {
-            mTextView.append(line.substring(i,i+1));
-            //delay a random duration
-            try {
-                Thread.sleep(ThreadLocalRandom.current().nextInt(100, 800));
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
+    public static int dpToPx(int dp)
+    {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static int pxToDp(int px)
+    {
+        return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    // cool response window creation animation
+    public void window_anim(TextView view) {
+        Log.d("Home","Starting window_response_anim");
+
+        view.setVisibility(View.VISIBLE);
+        for (Drawable drawable : view.getCompoundDrawables()) {
+
+            if (drawable instanceof Animatable) {
+                ((Animatable) drawable).start();
             }
+        }
+    }
+
+    // button animation when activity is started
+    public void buttonAnim() {
+        // get window dimensions
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        float width = size.x;
+        float height = size.y;
+
+        // find our px from dp
+        int px = dpToPx(48);
+
+        // set up animation
+        Log.d("Main", "setting up button animation");
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i].setAlpha(0f);
+            buttons[i].setVisibility(View.VISIBLE);
+
+            //buttons[i].startAnimation(buttonAnims[i]);
+            ObjectAnimator preAnimTranslateX = ObjectAnimator.ofFloat(buttons[i],"x",width/2,width);
+            preAnimTranslateX.setDuration(0);
+            preAnimTranslateX.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator preAnimTranslateY = ObjectAnimator.ofFloat(buttons[i],"y",height/2,0f+height/2*(i+1));
+            preAnimTranslateY.setDuration(0);
+            preAnimTranslateY.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator alpha = ObjectAnimator.ofFloat(buttons[i],"alpha",0f,1f);
+            alpha.setDuration(1000);
+            alpha.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(buttons[i],"scaleX",50f,1f);
+            scaleX.setDuration(1000);
+            scaleX.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(buttons[i],"scaleY",50f,1f);
+            scaleY.setDuration(1000);
+            scaleY.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator scalingTranslateX = ObjectAnimator.ofFloat(buttons[i],"x",width,width/2);
+            scalingTranslateX.setDuration(1000);
+            scalingTranslateX.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator scalingTranslateY = ObjectAnimator.ofFloat(buttons[i],"y",0f+height/2*(i+1),height/2);
+            scalingTranslateY.setDuration(1000);
+            scalingTranslateY.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator postScaleTranslateX = ObjectAnimator.ofFloat(buttons[i],"x",width/2,0f);
+            postScaleTranslateX.setDuration(400);
+            postScaleTranslateX.setInterpolator(new AccelerateInterpolator());
+            ObjectAnimator postScaleTranslateY = ObjectAnimator.ofFloat(buttons[i],"y",height/2,0f+px*(i+1));
+            postScaleTranslateY.setDuration(400);
+            postScaleTranslateY.setInterpolator(new AccelerateInterpolator());
+
+            //set up animation set
+            AnimatorSet buttonAnims = new AnimatorSet();
+
+            //run animations
+            buttonAnims.play(preAnimTranslateX);
+            buttonAnims.play(preAnimTranslateY);
+            buttonAnims.play(scaleX).after(200*(i+1));
+            buttonAnims.play(scaleY).after(200*(i+1));
+            buttonAnims.play(alpha).after(200*(i+1));
+            buttonAnims.play(scalingTranslateX).after(200*(i+1));
+            buttonAnims.play(scalingTranslateY).after(200*(i+1));
+            buttonAnims.play(postScaleTranslateX).after(3000+(200*i));
+            buttonAnims.play(postScaleTranslateY).after(3000+(200*i));
+
+            buttonAnims.start();
         }
     }
 }

@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:anim/linear_interpolator"
-    android:fillAfter="true">
+<set xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <translate
-        android:startOffset="2000"
-        android:fromXDelta="-100%p"
-        android:fromYDelta="0%p"
-        android:toXDelta="0%p"
-        android:toYDelta="0%p"
-        android:duration="300" />
+    <scale android:interpolator="@android:anim/accelerate_interpolator"
+        android:fromXScale="10.0"
+        android:toXScale="1.0"
+        android:fromYScale="10.0"
+        android:toYScale="1.0"
+        android:duration="800"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:startOffset="500">
+    </scale>
+    <translate xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fromXDelta="50%p"
+        android:fromYDelta="50%p"
+        android:toXDelta="0"
+        android:toYDelta="10%p"
+        android:duration="300"
+        android:startOffset="1600">
+    </translate>
 
 </set>

@@ -4,10 +4,14 @@
     <string name="app_name">Alfr3d</string>
     <string name="SplashRoll">Splash roll</string>
 
-    <!-- Main Activity -->
-    <string name="title_activity_main">Alfr3d</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_away">Away</string>
+
+    <!-- Buttons Activity -->
     <string name="dummy_button">Dummy Button</string>
     <string name="settings_button">Settings</string>
+    <string name="home_button">Home</string>
     <string name="dummy_content">Alfr3d</string>
     <string name="lightsOn_button">Lights On</string>
     <string name="lightsOff_button">Lights Off</string>
@@ -17,19 +21,19 @@
     <string name="custom_button">Custom</string>
     <string name="help_button">Help</string>
 
-    <!-- Away Activity -->
-    <string name="home_button">Home</string>
-
     <!-- Settings -->
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_fs__play">FS_Play</string>
-    <string name="title_activity_away">Away</string>
-    <string name="url_string">Alfr3d Url</string>
-    <string name="default_url">no url defined</string>
-    <string name="host_settings">Host Settings</string>
-    <string name="home_ssid">Home SSID</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="default_url">no url defined</string>
+    <!-- Home -->
+    <string name="host_settings_home">Home Settings</string>
+    <string name="url_string_home">Alfr3d Url</string>
+    <string name="ssid_home">Home SSID</string>
+    <!-- Home -->
+    <string name="host_settings_office">Office Settings</string>
+    <string name="url_string_office">Alfr3d Url</string>
+    <string name="ssid_office">Office SSID</string>
+
 
 </resources>

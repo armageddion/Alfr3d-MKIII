@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
 
     android:background="#000000"
-    tools:context="com.littl31.alfr3d.HomeActivity">
+    tools:context="com.littl31.alfr3d.OfficeActivity">
 
     <ImageView
         android:layout_width="fill_parent"

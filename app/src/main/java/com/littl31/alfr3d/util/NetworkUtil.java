@@ -71,4 +71,28 @@ public class NetworkUtil {
         return (ssid.equalsIgnoreCase(homeSSID));
 
     }
+
+    public static boolean isConnectedToOffice(Context context) {
+        String ssid = null;
+
+        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String officeSSID = mySharedPreferences.getString("office_ssid_preference","ssid not set");
+        Log.d("NetworkUtil", "Office SSID:"+officeSSID);
+
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (activeNetwork.isConnected()) {
+            final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+            if (connectionInfo != null) {
+                ssid = connectionInfo.getSSID();
+                ssid = ssid.substring(1,ssid.length()-1);
+                Log.d("NetworkUtil", "SSID:"+ssid);
+            }
+        }
+
+        return (ssid.equalsIgnoreCase(officeSSID));
+
+    }
 }
