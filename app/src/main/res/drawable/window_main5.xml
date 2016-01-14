@@ -1,66 +1,61 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:height="100dp"
-    android:width="150dp"
+    android:width="100dp"
 
-    android:viewportWidth="15"
+    android:viewportWidth="10"
     android:viewportHeight="15" >
 
-    <group android:name="window_main1_group">
+    <group android:name="window_main5_group">
 
         <!-- first half of the window -->
-        <path android:name="window_main1_1"
+        <path android:name="window_main5_1"
             android:strokeWidth="0.1"
             android:strokeColor="@color/alfr3d_blue"
             android:trimPathStart="0"
-            android:pathData="M0,5
+            android:pathData="M0.5,5.5
                             l1,1
-                            l0,6
+                            l0,7
                             l1,1
-                            l6,0
-                            l1,1
-                            l4,0
+                            l3,0
+                            l3,0
                             l1,-1" />
 
         <!-- second half of the window -->
-        <path android:name="window_main1_2"
+        <path android:name="window_main5_2"
             android:strokeWidth="0.1"
             android:strokeColor="@color/alfr3d_blue"
             android:trimPathStart="0"
-            android:pathData="M13,13
+            android:pathData="M8.5,13.5
                             l1,-1
-                            l0,-5
+                            l0,-9
                             l-1,-1
-                            l0,-4
+                            l0,-1
                             l-1,-1
-                            l-7,0
-                            l-1,-1
-                            l-3,0
+                            l-6,0
                             l-1,1
                             l0,3
                             l1,1"/>
 
         <!-- some details -->
-        <path android:name="window_main1_3"
+        <path android:name="window_main5_3"
             android:strokeWidth="0.1"
             android:strokeColor="@color/alfr3d_blue"
             android:strokeAlpha="1"
-            android:pathData="M1,1
-                            l-0.2,0.2
-                            m-0.3,0.3
-                            l0,0.2
-                            m0,0.3
+            android:pathData="M1,1.5
                             l0,0.2
                             m0,0.3
                             l0,1
                             m0,0.3
                             l0,0.2
-                            M13.5,12
+                            m0,0.3
+                            l0,0.2
+                            M9,12
                             l0,-0.2
                             m0,-0.3
                             l0,-0.2
                             m0,-0.3
-                            l0,-2
+                            l0,-4
                             m0,-0.3
                             l0,-0.2"/>
     </group>

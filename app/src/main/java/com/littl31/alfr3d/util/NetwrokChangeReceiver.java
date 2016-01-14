@@ -21,7 +21,9 @@ public class NetwrokChangeReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(final Context context, final Intent intent) {
 
+        Log.d("NetworkChangeReceiver","starting");
         String status = NetworkUtil.getConnectivityStatusString(context);
+        Log.d("NetworkChangeReceiver","Status: "+status);
 
         //Toast.makeText(context, status, Toast.LENGTH_LONG).show();
 

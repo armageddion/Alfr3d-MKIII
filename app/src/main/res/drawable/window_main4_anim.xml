@@ -1,0 +1,12 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/window_main4" >
+    <target
+        android:name="window_main4_1"
+        android:animation="@anim/window_response_anim1" />
+    <target
+        android:name="window_main4_2"
+        android:animation="@anim/window_response_anim2" />
+    <target
+        android:name="window_main4_3"
+        android:animation="@anim/window_response_anim3" />
+</animated-vector>

@@ -3,8 +3,8 @@
     android:height="100dp"
     android:width="150dp"
 
-    android:viewportWidth="20"
-    android:viewportHeight="40" >
+    android:viewportWidth="15"
+    android:viewportHeight="15" >
 
     <group android:name="window_main1_group">
 
@@ -13,13 +13,13 @@
             android:strokeWidth="0.1"
             android:strokeColor="@color/alfr3d_blue"
             android:trimPathStart="0"
-            android:pathData="M0,20
+            android:pathData="M0,6
                             l1,1
-                            l0,17
+                            l0,6
                             l1,1
-                            l10,0
-                            l1,-1
                             l4,0
+                            l1,-1
+                            l5,0
                             l1,-1" />
 
         <!-- second half of the window -->
@@ -27,17 +27,17 @@
             android:strokeWidth="0.1"
             android:strokeColor="@color/alfr3d_blue"
             android:trimPathStart="0"
-            android:pathData="M17,37
+            android:pathData="M12,12
                             l1,-1
-                            l0,-12
+                            l0,-3
                             l1,-1
-                            l0,-22
+                            l0,-6
                             l-1,-1
-                            l-9,0
+                            l-8,0
                             l-1,1
-                            l-7,0
+                            l-3,0
                             l-1,1
-                            l0,17
+                            l0,3
                             l1,1"/>
 
         <!-- some details -->
@@ -52,12 +52,10 @@
                             m0,0.3
                             l0,0.2
                             m0,0.3
-                            l0,12
+                            l0,1
                             m0,0.3
                             l0,0.2
-                            m0,0.3
-                            l0,0.2
-                            M9,1
+                            M5,1
                             l0.2,0
                             m0.3,0
                             l0.2,0

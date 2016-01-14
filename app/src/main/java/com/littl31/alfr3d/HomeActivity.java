@@ -35,11 +35,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class HomeActivity extends Activity {
 
+    // intiate type writer for animated responses
+    private TypeWriter writer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
     }
 
     @Override
@@ -252,11 +256,8 @@ public class HomeActivity extends Activity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        //final TextView mTextView = (TextView) findViewById(R.id.alfr3d_response_text);
 
         // log requested message
-        //final TextView Alfr3dLog = (TextView) findViewById(R.id.alfr3d_log_text);
-        //Alfr3dLog.append("\n"+message);
         TypeWriter log_writer = (TypeWriter) findViewById(R.id.alfr3d_log_text);
         log_writer.animateText(message);
 
@@ -267,18 +268,13 @@ public class HomeActivity extends Activity {
                     public void onResponse(String response) {
                         Log.d("Response",response);
                         // display response
-                        //mTextView.append("\nResponse is: " + response);
-                        TypeWriter log_writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
-                        log_writer.animateText("Response is :"+response);
+                        writer.animateText("Response is :"+response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.d("Response", Integer.toString(error.networkResponse.statusCode));
                 Log.d("Response","That didn't work!");
-                //mTextView.append("\nThat didn't work!");
-                TypeWriter log_writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
-                log_writer.animateText("That didn't work!");
+                writer.animateText("That didn't work!");
             }
         });
         // Add the request to the RequestQueue.

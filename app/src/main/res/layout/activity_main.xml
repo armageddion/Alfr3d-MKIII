@@ -29,7 +29,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:background="@drawable/alfr3d_l"
-        android:onClick="help" />
+        android:onClick="show_win1" />
     <TextView android:id="@+id/test_button3"
         style="?metaButtonBarButtonStyle"
         android:layout_width="48dp"
@@ -37,7 +37,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:background="@drawable/alfr3d_f"
-        android:onClick="show_win1" />
+        android:onClick="show_win2" />
     <TextView android:id="@+id/test_button4"
         style="?metaButtonBarButtonStyle"
         android:layout_width="48dp"
@@ -45,7 +45,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:background="@drawable/alfr3d_r"
-        android:onClick="show_win2" />
+        android:onClick="show_win3" />
     <TextView android:id="@+id/test_button5"
         style="?metaButtonBarButtonStyle"
         android:layout_width="48dp"
@@ -53,7 +53,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:background="@drawable/alfr3d_e"
-        android:onClick="write" />
+        android:onClick="show_win4" />
     <TextView android:id="@+id/test_button6"
         style="?metaButtonBarButtonStyle"
         android:layout_width="48dp"
@@ -61,7 +61,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:background="@drawable/alfr3d_d"
-        android:onClick="write" />
+        android:onClick="show_win5" />
 
     <LinearLayout
         style="?metaButtonBarStyle"
@@ -72,7 +72,7 @@
         android:background="@color/black_overlay">
 
         <ImageButton android:id="@+id/home_button"
-            style="?metaButtonBarButtonStyle"
+            style="@style/Alfr3dButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/alfr3d_home"
@@ -94,31 +94,121 @@
         android:src="@drawable/alfr3d_3_sketch"
         android:layout_gravity="end|top" />
 
-    <com.littl31.alfr3d.util.TypeWriter
-        android:id="@+id/alfr3d_response_text"
-        android:textColor="@color/alfr3d_blue"
-        android:textStyle="normal"
-        android:textSize="12sp"
-        android:layout_width="300dp"
-        android:layout_height="180dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="75dp"
-        android:gravity="bottom|end"
-        android:text=""
-        android:textAlignment="gravity"
-        android:paddingBottom="20dp"
-        android:paddingStart="0dp"
-        android:paddingEnd="25dp"
-        android:paddingTop="20dp"/>
-
+    <!-- text in window boxes -->
     <LinearLayout
-        style="?metaButtonBarStyle"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="65dp"
+        android:orientation="vertical"
+        android:gravity="bottom|end"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_gravity="bottom|end"
+            android:layout_weight="0.3"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/alfr3d_win1_text"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:textColor="@color/alfr3d_blue"
+                android:textAlignment="gravity"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="Lat:39.754\nLong:-75.123"
+                android:alpha="0" />
+            <TextView
+                android:id="@+id/alfr3d_win2_text"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/alfr3d_blue"
+                android:textAlignment="center"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:text="100"
+                android:alpha="0"/>
+        </LinearLayout>
+        <com.littl31.alfr3d.util.TypeWriter
+            android:id="@+id/alfr3d_response_text"
+            android:textColor="@color/alfr3d_blue"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:layout_width="300dp"
+            android:layout_height="180dp"
+            android:layout_gravity="bottom|end"
+            android:layout_weight="0.4"
+            android:paddingStart="10dp"
+            android:paddingEnd="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:gravity="bottom|end"
+            android:text=""
+            android:textAlignment="gravity" />
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom|end"
+            android:layout_weight="0.3"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/alfr3d_win3_text"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end"
+                android:textColor="@color/alfr3d_blue"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:text="asdqwe"
+                android:paddingStart="10dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="15dp"
+                android:alpha="0"/>
+            <TextView
+                android:id="@+id/alfr3d_win4_text"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end"
+                android:textColor="@color/alfr3d_blue"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:text="asdqwe"
+                android:paddingStart="10dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="15dp"
+                android:alpha="0"/>
+            <TextView
+                android:id="@+id/alfr3d_win5_text"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end"
+                android:textColor="@color/alfr3d_blue"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:text="asdqwe"
+                android:paddingStart="10dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="15dp"
+                android:alpha="0"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- bottom portion: windows, alfr3d call, buttons -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@color/black_overlay"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="300dp"
@@ -135,7 +225,7 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="bottom|start"
                 android:text=""
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:drawableStart="@drawable/window_main1_anim" />
             <TextView
                 android:id="@+id/alfr3d_win2"
@@ -147,7 +237,7 @@
                 android:layout_marginStart="5dp"
                 android:gravity="bottom|end"
                 android:text=""
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:drawableStart="@drawable/window_main2_anim"/>
         </LinearLayout>
 
@@ -161,11 +251,47 @@
             android:gravity="bottom|end"
             android:text=""
             android:textAlignment="gravity"
-            android:paddingBottom="10dp"
-            android:paddingStart="0dp"
-            android:paddingEnd="25dp"
-            android:paddingTop="20dp"
             android:drawableStart="@drawable/window_response_anim"/>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end">
+            <TextView
+                android:id="@+id/alfr3d_win3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_weight="0.5"
+                android:layout_marginTop="5dp"
+                android:gravity="bottom|start"
+                android:text=""
+                android:visibility="invisible"
+                android:drawableStart="@drawable/window_main3_anim" />
+            <TextView
+                android:id="@+id/alfr3d_win4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_weight="0.5"
+                android:layout_marginTop="5dp"
+                android:gravity="bottom|end"
+                android:text=""
+                android:visibility="invisible"
+                android:drawableStart="@drawable/window_main4_anim"/>
+            <TextView
+                android:id="@+id/alfr3d_win5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_weight="0.5"
+                android:layout_marginTop="5dp"
+                android:gravity="bottom|end"
+                android:text=""
+                android:visibility="invisible"
+                android:drawableStart="@drawable/window_main5_anim"/>
+        </LinearLayout>
 
         <TextView android:id="@+id/alfr3d_call"
             android:layout_width="match_parent"
@@ -189,21 +315,21 @@
             tools:ignore="UselessParent">
 
             <ImageButton android:id="@+id/custom_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alfr3d_cmd"
                 android:onClick="custom"/>
 
             <ImageButton android:id="@+id/help_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alfr3d_help"
                 android:onClick="help"/>
 
             <ImageButton android:id="@+id/settings_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alfr3d_settings"
@@ -211,35 +337,4 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="50dp"
-        android:id="@+id/locationdata">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lat"
-            android:id="@+id/geoLatitude"
-            android:layout_gravity="top"
-            android:gravity="top" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Long"
-            android:id="@+id/geoLongitude" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Speed"
-            android:id="@+id/geoSpeed" />
-    </LinearLayout>
-
 </FrameLayout>

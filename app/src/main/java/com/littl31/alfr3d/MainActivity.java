@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -50,6 +51,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -75,11 +77,20 @@ public class MainActivity extends Activity {
     // button views.. these will be used by a few methods below
     private TextView [] buttons = new TextView[6];
 
+    // intiate type writer for animated responses
+    private TypeWriter writer;
+
+    // set up text to speech
+    TextToSpeech ttsobj;
+    boolean isTtsReady = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
 
         // setup button view array
         buttons[0] = (TextView) findViewById(R.id.test_button1);
@@ -93,9 +104,19 @@ public class MainActivity extends Activity {
             buttons[i].setVisibility(View.GONE);
         }
 
-        //registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-
-        //writeStatusLine("initializing...");
+        // set up text to speech
+        ttsobj = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                Log.d("TTS", "TTS onInit() called with status "+Integer.toString(status));
+                if (status == TextToSpeech.SUCCESS) {
+                    // try tts for speak
+                    Log.d("TTS", "Trying to speak: Initializing");
+                    ttsobj.speak("Initializing all Alfred services",TextToSpeech.QUEUE_FLUSH, null);
+                    isTtsReady = true;
+                }
+            }
+        });
     }
 
     @Override
@@ -104,69 +125,87 @@ public class MainActivity extends Activity {
 
         // create some windows just for fun
         window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
-        //window_anim((TextView) findViewById(R.id.alfr3d_win1));
-        //window_anim((TextView) findViewById(R.id.alfr3d_win2));
+        // after window is created.
+        writer.animateText("System initializing...");
 
         buttonAnim();
 
-        //writeStatusLine("Done");
-//        // Acquire a reference to the system Location Manager
-//        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-//
-//        // Define a listener that responds to location updates
-//        LocationListener locationListener = new LocationListener() {
-//            public void onLocationChanged(Location location) {
-//                // Called when a new location is found by the network location provider.
-//
-//                float curSpeed = location.getSpeed();
-//                if (curSpeed > 0.0 ){
-//                    Log.d("Main", "Speed: "+curSpeed);
-//                    TextView mGeoSpeedView = (TextView) findViewById(R.id.geoSpeed);
-//                    mGeoSpeedView.setText("Current Speed: " + curSpeed);
-//                }
-//                else {
-//                    Log.d("Main","Speed: Alfr3d-_-");
-//                    TextView mGeoSpeedView = (TextView) findViewById(R.id.geoSpeed);
-//                    mGeoSpeedView.setText("Alfr3d\n-_-");
-//                }
-//
-//                Log.d("Main", "Latitude:"+String.valueOf(location.getLatitude()));
-//                TextView mLatitue = (TextView) findViewById(R.id.geoLatitude);
-//                mLatitue.setText("Lat:"+String.valueOf(location.getLatitude()));
-//                Log.d("Main", "Longitude:"+String.valueOf(location.getLongitude()));
-//                TextView mLongitude = (TextView) findViewById(R.id.geoLongitude);
-//                mLongitude.setText("Long:"+String.valueOf(location.getLongitude()));
-//            }
-//
-//            public void onStatusChanged(String provider, int status, Bundle extras) {}
-//
-//            public void onProviderEnabled(String provider) {}
-//
-//            public void onProviderDisabled(String provider) {}
-//        };
-//
-//        // Register the listener with the Location Manager to receive location updates
-//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-    }
+        // need to get MAC address for later
+        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        String MAC = manager.getConnectionInfo().getMacAddress();
+        Log.d("Main", "MAC: "+MAC);
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == android.R.id.home) {
-//            // This ID represents the Home or Up button. In the case of this
-//            // activity, the Up button is shown. Use NavUtils to allow users
-//            // to navigate up one level in the application structure. For
-//            // more details, see the Navigation pattern on Android Design:
-//            //
-//            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-//            //
-//            // TODO: If Settings has multiple levels, Up should navigate up
-//            // that hierarchy.
-//            NavUtils.navigateUpFromSameTask(this);
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        writer.animateText("Initiating location services");
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+
+                float curSpeed = location.getSpeed();
+                if (curSpeed > 0.0 ){
+                    Log.d("Main", "Speed: "+curSpeed);
+                    TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
+                    mGeoSpeedView.setText("Current Speed: " + curSpeed);
+                    show_win3(findViewById(R.id.alfr3d_win2));
+                }
+                else {
+                    Log.d("Main","Speed: 0");
+                    TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
+                    mGeoSpeedView.setText("-_-");
+                }
+
+                writer.animateText("Location update: \nLat:"+String.valueOf(location.getLatitude()) +
+                                                    "\nLong:"+String.valueOf(location.getLongitude()));
+                TextView geoText = (TextView) findViewById(R.id.alfr3d_win1_text);
+                geoText.setText("Lat:"+String.valueOf(String.format("%.5g%n", location.getLatitude())) +
+                                "\nLong:"+String.valueOf(String.format("%.5g%n", location.getLongitude())));
+
+                // Check in with the Littl3.1 Database
+//                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+//                final String finalCall = "http://www.littl31.com:8080/device/set?MAC=" +
+//                        "60:36:dd:6a:24:d5&location="+
+//                        String.valueOf(location.getLatitude())+","+
+//                        String.valueOf(location.getLongitude());
+//                Log.d("Main", "Check-in call: "+finalCall);
+//
+//                StringRequest stringRequest = new StringRequest(Request.Method.GET, finalCall,
+//                        new Response.Listener<String>() {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                Log.d("Response",response);
+//                                // display response
+//                                writer.animateText("Littl31 check-in successful. Response: "+response);
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        writer.animateText("Littl31 check-in failed");
+//                    }
+//                });
+//                // Add the request to the RequestQueue.
+//                queue.add(stringRequest);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        // Register wifi listener
+        IntentFilter wifiIntentFilter = new IntentFilter();
+        wifiIntentFilter.addAction(WifiManager.EXTRA_SUPPLICANT_CONNECTED);
+        wifiIntentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
+        //wifiIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        registerReceiver(wifi1, wifiIntentFilter);
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -192,6 +231,7 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
+        // release the network receiver
         try {
             unregisterReceiver(wifi1);
         } catch (Exception e) {
@@ -202,10 +242,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        //registerReceiver(wifi1, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
-        //window_anim((TextView) findViewById(R.id.alfr3d_win1));
-        //window_anim((TextView) findViewById(R.id.alfr3d_win2));
+        // write out a quip
+        writer.animateText("Resuming systems on main thread");
     }
 
     @Override
@@ -216,6 +256,13 @@ public class MainActivity extends Activity {
             unregisterReceiver(wifi1);
         } catch (Exception e) {
             Log.e("onDestroy", getClass()+" Releasing receivers-"+e.getMessage());
+        }
+
+        // release the text to speech stuff back
+        if (ttsobj != null) {
+            ttsobj.stop();
+            ttsobj.shutdown();
+            Log.d("onDestroy", "Releasing TTS hogs");
         }
 
     }
@@ -233,16 +280,117 @@ public class MainActivity extends Activity {
     }
 
     public void show_win1(View view) {
-        window_anim((TextView) findViewById(R.id.alfr3d_win1));
+        TextView win1_text = (TextView) findViewById(R.id.alfr3d_win1_text);
+        if (win1_text.getAlpha() == 0) {
+            window_anim((TextView) findViewById(R.id.alfr3d_win1));
+            win1_text.animate()
+                    .alpha(1f)
+                    .setDuration(1000);
+        }
+        else {
+            TextView win1 = (TextView) findViewById(R.id.alfr3d_win1);
+            // fade out, then re-set visibility/alpha settings
+            win1.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+            win1.setVisibility(View.INVISIBLE);
+
+            win1_text.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+        }
     }
 
     public void show_win2(View view) {
-        window_anim((TextView) findViewById(R.id.alfr3d_win2));
+        TextView win2_text = (TextView) findViewById(R.id.alfr3d_win2_text);
+        if (win2_text.getAlpha() == 0) {
+            window_anim((TextView) findViewById(R.id.alfr3d_win2));
+            win2_text.animate()
+                    .alpha(1f)
+                    .setDuration(1000);
+        }
+        else {
+            TextView win2 = (TextView) findViewById(R.id.alfr3d_win2);
+            // fade out, then re-set visibility/alpha settings
+            win2.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+            win2.setVisibility(View.INVISIBLE);
+
+            win2_text.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+        }
     }
 
+    public void show_win3(View view) {
+        TextView win3_text = (TextView) findViewById(R.id.alfr3d_win3_text);
+        if (win3_text.getAlpha() == 0) {
+            window_anim((TextView) findViewById(R.id.alfr3d_win3));
+            win3_text.animate()
+                    .alpha(1f)
+                    .setDuration(1000);
+        }
+        else {
+            TextView win3 = (TextView) findViewById(R.id.alfr3d_win3);
+            // fade out, then re-set visibility/alpha settings
+            win3.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+            win3.setVisibility(View.INVISIBLE);
+
+            win3_text.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+        }
+    }
+
+    public void show_win4(View view) {
+        TextView win4_text = (TextView) findViewById(R.id.alfr3d_win4_text);
+        if (win4_text.getAlpha() == 0) {
+            window_anim((TextView) findViewById(R.id.alfr3d_win4));
+            win4_text.animate()
+                    .alpha(1f)
+                    .setDuration(1000);
+        }
+        else {
+            TextView win4 = (TextView) findViewById(R.id.alfr3d_win4);
+            // fade out, then re-set visibility/alpha settings
+            win4.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+            win4.setVisibility(View.INVISIBLE);
+
+            win4_text.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+        }
+    }
+
+    public void show_win5(View view) {
+        TextView win5_text = (TextView) findViewById(R.id.alfr3d_win5_text);
+        if (win5_text.getAlpha() == 0) {
+            window_anim((TextView) findViewById(R.id.alfr3d_win5));
+            win5_text.animate()
+                    .alpha(1f)
+                    .setDuration(1000);
+        }
+        else {
+            TextView win5 = (TextView) findViewById(R.id.alfr3d_win5);
+            // fade out, then re-set visibility/alpha settings
+            win5.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+            win5.setVisibility(View.INVISIBLE);
+
+            win5_text.animate()
+                    .alpha(0f)
+                    .setDuration(1000);
+        }
+    }
 
     public void write(View view){
-        TypeWriter writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
+
         //setContentView(writer);
         writer.animateText("initializing...");
     }
@@ -261,7 +409,6 @@ public class MainActivity extends Activity {
         alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                TypeWriter writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
                 writer.animateText("Sending custom command: "+value);
                 // Send custom command to Alfr3d
                 sendButtonCommand(value);
@@ -279,9 +426,11 @@ public class MainActivity extends Activity {
 
     // a rather useless help menu
     public void help(View view) {
+        if (isTtsReady){
+            ttsobj.speak("sorry, can't help you", TextToSpeech.QUEUE_FLUSH, null);
+        }
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        TypeWriter writer = (TypeWriter) findViewById(R.id.alfr3d_response_text);
         writer.animateText("Opening help menu");
 
         alert.setTitle("Help");
@@ -385,6 +534,7 @@ public class MainActivity extends Activity {
         Log.d("Home","Starting window_response_anim");
 
         view.setVisibility(View.VISIBLE);
+        view.setAlpha(1f);
         for (Drawable drawable : view.getCompoundDrawables()) {
 
             if (drawable instanceof Animatable) {
