@@ -79,20 +79,23 @@
             android:onClick="home"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/logo3"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="end|top"
+        android:text=""
+        android:alpha="1"
+        android:drawableStart="@drawable/l31logo_anim" />
+
     <ImageView
         android:layout_width="192dp"
         android:layout_height="48dp"
         android:id="@+id/imageView_title"
         android:src="@drawable/alfr3d_title"
         android:layout_gravity="end|end"
-        android:paddingEnd="50dp" />
+        android:layout_marginEnd="100dp" />
 
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="83dp"
-        android:id="@+id/imageView_logo3"
-        android:src="@drawable/alfr3d_3_sketch"
-        android:layout_gravity="end|top" />
 
     <!-- text in window boxes -->
     <LinearLayout
@@ -115,11 +118,11 @@
                 android:layout_height="match_parent"
                 android:gravity="start|center"
                 android:textColor="@color/alfr3d_blue"
-                android:textAlignment="gravity"
-                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textSize="16sp"
                 android:textStyle="normal"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="Lat:39.754\nLong:-75.123"

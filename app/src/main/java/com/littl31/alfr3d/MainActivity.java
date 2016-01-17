@@ -125,6 +125,7 @@ public class MainActivity extends Activity {
 
         // create some windows just for fun
         window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
+        logo_anim((TextView) findViewById(R.id.logo3));
         // after window is created.
         writer.animateText("System initializing...");
 
@@ -145,23 +146,26 @@ public class MainActivity extends Activity {
                 // Called when a new location is found by the network location provider.
 
                 float curSpeed = location.getSpeed();
-                if (curSpeed > 0.0 ){
-                    Log.d("Main", "Speed: "+curSpeed);
-                    TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
-                    mGeoSpeedView.setText("Current Speed: " + curSpeed);
-                    show_win3(findViewById(R.id.alfr3d_win2));
-                }
-                else {
-                    Log.d("Main","Speed: 0");
-                    TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
-                    mGeoSpeedView.setText("-_-");
-                }
+                Log.d("Main", "Speed: "+curSpeed);
+                TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
+                mGeoSpeedView.setText(String.valueOf(curSpeed));
+//                if (curSpeed > 0.0 ){
+//                    Log.d("Main", "Speed: "+curSpeed);
+//                    TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
+//                    mGeoSpeedView.setText("Current Speed: " + curSpeed);
+//                    show_win3(findViewById(R.id.alfr3d_win2));
+//                }
+//                else {
+//                    Log.d("Main","Speed: 0");
+//                    TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
+//                    mGeoSpeedView.setText("-_-");
+//                }
 
                 writer.animateText("Location update: \nLat:"+String.valueOf(location.getLatitude()) +
                                                     "\nLong:"+String.valueOf(location.getLongitude()));
                 TextView geoText = (TextView) findViewById(R.id.alfr3d_win1_text);
-                geoText.setText("Lat:"+String.valueOf(String.format("%.5g%n", location.getLatitude())) +
-                                "\nLong:"+String.valueOf(String.format("%.5g%n", location.getLongitude())));
+                geoText.setText("Lat:"+String.valueOf(String.format("%.5g", location.getLatitude())) +
+                                "\nLong:"+String.valueOf(String.format("%.5g", location.getLongitude())));
 
                 // Check in with the Littl3.1 Database
 //                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -532,6 +536,20 @@ public class MainActivity extends Activity {
     // cool response window creation animation
     public void window_anim(TextView view) {
         Log.d("Home","Starting window_response_anim");
+
+        view.setVisibility(View.VISIBLE);
+        view.setAlpha(1f);
+        for (Drawable drawable : view.getCompoundDrawables()) {
+
+            if (drawable instanceof Animatable) {
+                ((Animatable) drawable).start();
+            }
+        }
+    }
+
+    // cool response window creation animation
+    public void logo_anim(TextView view) {
+        Log.d("Home","Starting littl31 logo anim");
 
         view.setVisibility(View.VISIBLE);
         view.setAlpha(1f);
