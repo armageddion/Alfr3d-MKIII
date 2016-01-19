@@ -20,7 +20,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
-        android:background="@drawable/alfr3d_a"
+        android:background="@drawable/button_office"
         android:onClick="office" />
     <TextView android:id="@+id/test_button2"
         style="?metaButtonBarButtonStyle"
@@ -28,7 +28,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
-        android:background="@drawable/alfr3d_l"
+        android:background="@drawable/button_gps"
         android:onClick="show_win1" />
     <TextView android:id="@+id/test_button3"
         style="?metaButtonBarButtonStyle"
@@ -36,7 +36,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
-        android:background="@drawable/alfr3d_f"
+        android:background="@drawable/button_speed"
         android:onClick="show_win2" />
     <TextView android:id="@+id/test_button4"
         style="?metaButtonBarButtonStyle"
@@ -44,7 +44,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
-        android:background="@drawable/alfr3d_r"
+        android:background="@drawable/button_x"
         android:onClick="show_win3" />
     <TextView android:id="@+id/test_button5"
         style="?metaButtonBarButtonStyle"
@@ -52,7 +52,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
-        android:background="@drawable/alfr3d_e"
+        android:background="@drawable/button_y"
         android:onClick="show_win4" />
     <TextView android:id="@+id/test_button6"
         style="?metaButtonBarButtonStyle"
@@ -60,7 +60,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
-        android:background="@drawable/alfr3d_d"
+        android:background="@drawable/button_z"
         android:onClick="show_win5" />
 
     <LinearLayout
@@ -75,7 +75,7 @@
             style="@style/Alfr3dButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/alfr3d_home"
+            android:src="@drawable/button_home"
             android:onClick="home"/>
     </LinearLayout>
 
@@ -94,7 +94,7 @@
         android:id="@+id/imageView_title"
         android:src="@drawable/alfr3d_title"
         android:layout_gravity="end|end"
-        android:layout_marginEnd="100dp" />
+        android:layout_marginEnd="80dp" />
 
 
     <!-- text in window boxes -->
@@ -161,7 +161,7 @@
             android:layout_gravity="bottom|end"
             android:layout_weight="0.3"
             android:orientation="horizontal">
-            <TextView
+            <com.littl31.alfr3d.util.TypeWriter
                 android:id="@+id/alfr3d_win3_text"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
@@ -169,10 +169,10 @@
                 android:textColor="@color/alfr3d_blue"
                 android:textStyle="normal"
                 android:textSize="12sp"
-                android:text="asdqwe"
+                android:text=""
                 android:paddingStart="10dp"
                 android:paddingEnd="20dp"
-                android:paddingTop="20dp"
+                android:paddingTop="10dp"
                 android:paddingBottom="15dp"
                 android:alpha="0"/>
             <TextView
@@ -321,21 +321,21 @@
                 style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alfr3d_cmd"
+                android:src="@drawable/button_custom"
                 android:onClick="custom"/>
 
             <ImageButton android:id="@+id/help_button"
                 style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alfr3d_help"
+                android:src="@drawable/button_help"
                 android:onClick="help"/>
 
             <ImageButton android:id="@+id/settings_button"
                 style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alfr3d_settings"
+                android:src="@drawable/button_settings"
                 android:onClick="settings" />
 
         </LinearLayout>

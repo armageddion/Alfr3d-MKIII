@@ -167,6 +167,13 @@ public class MainActivity extends Activity {
                 geoText.setText("Lat:"+String.valueOf(String.format("%.5g", location.getLatitude())) +
                                 "\nLong:"+String.valueOf(String.format("%.5g", location.getLongitude())));
 
+                TypeWriter bearingWriter = (TypeWriter) findViewById(R.id.alfr3d_win3_text);
+                bearingWriter.animateText("Bearing:"+String.valueOf(location.getBearing()));
+
+                // temp call
+                // String geocall = "http://maps.google.com/maps/api/geocode/json?latlng="+String.valueOf(location.getLatitude())+
+                // "String.valueOf(location.getLatitude())+"&sensor=false";
+
                 // Check in with the Littl3.1 Database
 //                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 //                final String finalCall = "http://www.littl31.com:8080/device/set?MAC=" +
@@ -226,8 +233,6 @@ public class MainActivity extends Activity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
-            //window_anim((TextView) findViewById(R.id.alfr3d_win1));
-            //window_anim((TextView) findViewById(R.id.alfr3d_win2));
         }
     }
 
@@ -438,11 +443,9 @@ public class MainActivity extends Activity {
         writer.animateText("Opening help menu");
 
         alert.setTitle("Help");
-        alert.setMessage("Available custom commands are:\n" +
-                "Hello\n" +
-                "Blink\n" +
-                "welcomehome\n" +
-                "reboot");
+        alert.setMessage("Sorry.... \n"+
+        "can't <help> you yet..\n"+
+        "we have only just met");
 
         alert.show();
     }
@@ -458,38 +461,9 @@ public class MainActivity extends Activity {
         // Do something in response to button
         String message = Command;
 
-        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String alfr3d_url = mySharedPreferences.getString("alfr3d_url_preference", "url not set");
+        String alfr3d_url = "http://www.littl31.com:8080/"+message;
         String full_alfr3d_call = alfr3d_url;
-        Log.d("Main", "Alfr3d URL:" + alfr3d_url);
-
-        //TEMP DEBUGING STUFF>>>
-        String homeSSID = mySharedPreferences.getString("home_ssid_preference", "ssid not set");
-        Log.d("Main", "Home SSID:" + homeSSID);
-
-        String method = mySharedPreferences.getString("method", "-1");
-
-        if (method.equals("CGI")) {
-            full_alfr3d_call = alfr3d_url + "/cgi-bin/alfr3d.cgi?command=" + message;
-        } else if (method.equals("Node.js")) {
-            // TODO: implement Node properly
-            full_alfr3d_call = alfr3d_url + ":1337/" + message;
-        } else if (method.equals("BottleRPC")) {
-            // TODO: complete bottle implementation
-            full_alfr3d_call = alfr3d_url + ":8080/" + message;
-        }
-
-
-        boolean node_enabled = mySharedPreferences.getBoolean("node_enabled", false);
-        if (node_enabled == true) {
-            //TODO Finish this bit
-            full_alfr3d_call = alfr3d_url + "/complete this bit when you have it working in node";
-        }
-
-        // curl: "http://alfr3d.no-ip.org/cgi-bin/test2.py?command=Blink"
-        if (!full_alfr3d_call.substring(0, 7).equalsIgnoreCase("http://")) {
-            full_alfr3d_call = "http://" + full_alfr3d_call;
-        }
+        Log.d("Main", "LitTl3.1 URL:" + alfr3d_url);
 
         final String finalCall = full_alfr3d_call;
         TextView Alfr3dURLView = (TextView) findViewById(R.id.alfr3d_call);
@@ -510,13 +484,15 @@ public class MainActivity extends Activity {
                     public void onResponse(String response) {
                         Log.d("Response",response);
                         // display response
-                        mTextView.append("\nResponse is: " + response);
+                        writer.animateText(response);
+                        //mTextView.append("\nResponse is: " + response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Log.d("Response", Integer.toString(error.networkResponse.statusCode));
-                mTextView.append("\nThat didn't work!");
+                writer.animateText("That didn't work!");
+                //mTextView.append("\nThat didn't work!");
             }
         });
         // Add the request to the RequestQueue.
