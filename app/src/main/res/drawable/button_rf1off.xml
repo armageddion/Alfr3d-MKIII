@@ -1,0 +1,66 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:height="48dp"
+    android:width="48dp"
+
+    android:viewportWidth="48"
+    android:viewportHeight="48" >
+
+    <!-- draw a path -->
+    <path android:strokeColor="@color/alfr3d_blue"
+        android:strokeWidth="1"
+        android:pathData="M24,24
+        m-2,-2
+        l-1,-1
+        m-1,-1
+        L8,8
+        l8,0
+        m1,0
+        l1,0
+        m1,0
+        l2,0
+        m1,0
+        L40,8
+        l-4,4
+        m-1,1
+        l-4,4
+        m-1,1
+        L24,24"/>
+
+    <path android:strokeColor="@color/alfr3d_blue"
+        android:strokeWidth="1"
+        android:pathData="
+        M24,10
+        l0,6
+        m0,1
+        l0,18
+        m0,1
+        L24,38
+        m2,0
+        l-4,0
+        L22,40
+        m-6,0
+        l2,0
+        m1,0
+        l1,0
+        m1,0
+        l7.5,0
+        m1,0
+        l3,0"/>
+
+    <path android:strokeColor="@color/alfr3d_blue"
+        android:strokeWidth="1"
+        android:pathData="M30,36
+        l2,0
+        l0,2
+        l-2,0
+        l0,-2z"/>
+
+    <!-- temp;delete;helps with design-->
+    <path android:fillColor="@color/black_overlay"
+        android:fillAlpha="0"
+        android:pathData="M0,0
+        L48,0
+        L48,48
+        L0,48z"/>
+</vector>

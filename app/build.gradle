@@ -1,21 +1,33 @@
+//noinspection GradleCompatiblePlugin
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
-
+    buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "com.littl31.alfr3d"
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
-        versionName "4.0.4"
+        versionName '4.0.9'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        beta {
+            debuggable true
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled false
+            zipAlignEnabled true
+        }
+        debug {
+            debuggable false
+        }
+    }
+    productFlavors {
     }
 }
 

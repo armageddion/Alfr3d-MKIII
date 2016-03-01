@@ -145,10 +145,15 @@ public class MainActivity extends Activity {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
 
-                float curSpeed = location.getSpeed();
+                float mSpeed = location.getSpeed();
+                float curSpeed = mSpeed*3600/1000;
                 Log.d("Main", "Speed: "+curSpeed);
                 TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
-                mGeoSpeedView.setText(String.valueOf(curSpeed));
+                mGeoSpeedView.setText(String.valueOf(Math.round(curSpeed)));
+                if (curSpeed > 0.0) {
+                    // draw the speed display
+                    show_win1(findViewById(R.id.alfr3d_win3));
+                }
 //                if (curSpeed > 0.0 ){
 //                    Log.d("Main", "Speed: "+curSpeed);
 //                    TextView mGeoSpeedView = (TextView) findViewById(R.id.alfr3d_win2_text);
@@ -161,14 +166,17 @@ public class MainActivity extends Activity {
 //                    mGeoSpeedView.setText("-_-");
 //                }
 
-                writer.animateText("Location update: \nLat:"+String.valueOf(location.getLatitude()) +
-                                                    "\nLong:"+String.valueOf(location.getLongitude()));
+                //writer.animateText("Location update: \nLat:"+String.valueOf(location.getLatitude()) +
+                //                                    "\nLong:"+String.valueOf(location.getLongitude()));
                 TextView geoText = (TextView) findViewById(R.id.alfr3d_win1_text);
                 geoText.setText("Lat:"+String.valueOf(String.format("%.5g", location.getLatitude())) +
                                 "\nLong:"+String.valueOf(String.format("%.5g", location.getLongitude())));
 
-                TypeWriter bearingWriter = (TypeWriter) findViewById(R.id.alfr3d_win3_text);
-                bearingWriter.animateText("Bearing:"+String.valueOf(location.getBearing()));
+                // I used to write this data out... but it turns out to be cumbersome
+                //TypeWriter bearingWriter = (TypeWriter) findViewById(R.id.alfr3d_win3_text);
+                //bearingWriter.animateText("Bearing:"+String.valueOf(location.getBearing()));
+                TextView bearingText = (TextView) findViewById(R.id.alfr3d_win3_text);
+                bearingText.setText(String.valueOf(location.getBearing()));
 
                 // temp call
                 // String geocall = "http://maps.google.com/maps/api/geocode/json?latlng="+String.valueOf(location.getLatitude())+
@@ -208,7 +216,7 @@ public class MainActivity extends Activity {
         };
 
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         // Register wifi listener
         IntentFilter wifiIntentFilter = new IntentFilter();
@@ -396,12 +404,6 @@ public class MainActivity extends Activity {
                     .alpha(0f)
                     .setDuration(1000);
         }
-    }
-
-    public void write(View view){
-
-        //setContentView(writer);
-        writer.animateText("initializing...");
     }
 
     // pop-up dialog to send a custom command

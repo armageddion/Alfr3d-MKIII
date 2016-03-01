@@ -26,54 +26,55 @@
             style="@style/Alfr3dButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/alfr3d_home"
+            android:src="@drawable/button_home"
             android:onClick="mainActivity"/>
 
         <ToggleButton android:id="@+id/lightsOn_button"
             style="@style/Alfr3dToggleButton"
-            android:background="@drawable/alfr3d_light_toggle_bg"
+            android:background="@drawable/button_light_toggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/alfr3d_light_toggle"
             android:onClick="Lights_toggle"/>
 
         <ToggleButton android:id="@+id/RF1Button"
             style="@style/Alfr3dToggleButton"
-            android:background="@drawable/alfr3d_rf1_toggle"
+            android:background="@drawable/button_rf1_toggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:onClick="RF1_toggle"/>
 
         <ToggleButton android:id="@+id/RF2Button"
             style="@style/Alfr3dToggleButton"
-            android:background="@drawable/alfr3d_rf2_toggle"
+            android:background="@drawable/button_rf2_toggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:onClick="RF2_toggle"/>
 
         <ToggleButton android:id="@+id/RF3Button"
             style="@style/Alfr3dToggleButton"
-            android:background="@drawable/alfr3d_rf3_toggle"
+            android:background="@drawable/button_rf3_toggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:onClick="RF3_toggle"/>
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/logo3"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="end|top"
+        android:text=""
+        android:alpha="1"
+        android:drawableStart="@drawable/l31logo_anim" />
+
     <ImageView
         android:layout_width="192dp"
         android:layout_height="48dp"
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView_title"
         android:src="@drawable/alfr3d_title"
         android:layout_gravity="end|end"
-        android:paddingEnd="50dp" />
-
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="83dp"
-        android:id="@+id/imageView3"
-        android:src="@drawable/alfr3d_3_sketch"
-        android:layout_gravity="end|top" />
+        android:layout_marginEnd="80dp" />
 
     <LinearLayout
         style="?metaButtonBarStyle"
@@ -109,28 +110,28 @@
                 style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alfr3d_reboot"
+                android:src="@drawable/button_reboot"
                 android:onClick="reboot" />
 
             <ImageButton android:id="@+id/custom_button"
                 style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alfr3d_cmd"
+                android:src="@drawable/button_custom"
                 android:onClick="custom"/>
 
             <ImageButton android:id="@+id/help_button"
                 style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alfr3d_help"
+                android:src="@drawable/button_help"
                 android:onClick="help"/>
 
             <ImageButton android:id="@+id/settings_button"
                 style="@style/Alfr3dButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alfr3d_settings"
+                android:src="@drawable/button_settings"
                 android:onClick="settings" />
 
         </LinearLayout>

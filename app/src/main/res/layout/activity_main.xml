@@ -96,7 +96,6 @@
         android:layout_gravity="end|end"
         android:layout_marginEnd="80dp" />
 
-
     <!-- text in window boxes -->
     <LinearLayout
         android:layout_width="300dp"

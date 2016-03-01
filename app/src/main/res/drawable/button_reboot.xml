@@ -1,0 +1,67 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:height="48dp"
+    android:width="48dp"
+
+    android:viewportWidth="48"
+    android:viewportHeight="48" >
+
+    <!-- draw a path -->
+
+    <!-- large building -->
+    <path android:strokeColor="@color/alfr3d_blue"
+        android:strokeWidth="1"
+        android:pathData="M8,8
+        l1,0
+        m1,0
+        l1,0
+        m1,0
+        l12,0
+        m1,0
+        l1,0
+        m1,0
+        l2,0
+        m1,0
+        L40,8
+        M12,10
+        l3,0
+        m1,0
+        l1,0
+        m1,0
+        L32,10
+        m1,0
+        l1,0
+        m1,0
+        l1,0
+        M24,10
+        l0,4
+        m0,1
+        l0,2
+        l4,2
+        l-8,4
+        l2,1"/>
+
+    <path android:strokeColor="@color/alfr3d_blue"
+        android:strokeWidth="1"
+        android:pathData="M20,40
+        l0,-1
+        M28,40
+        l0,-1
+        M24,40
+        l0,-3
+        m0,-1
+        l0,-1
+        m0,-1
+        l0,-1
+        l-4,-2
+        l8,-4
+        l-2,-1" />
+
+    <!-- temp;delete;helps with design-->
+    <path android:fillColor="@color/black_overlay"
+        android:fillAlpha="0"
+        android:pathData="M0,0
+        L48,0
+        L48,48
+        L0,48z"/>
+</vector>
