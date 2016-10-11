@@ -1,0 +1,48 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/l31logo_splash" >
+    <target
+        android:name="logo_piece01"
+        android:animation="@anim/logo_piece01_anim" />
+    <target
+        android:name="logo_piece02"
+        android:animation="@anim/logo_piece02_anim" />
+    <target
+        android:name="logo_piece03"
+        android:animation="@anim/logo_piece03_anim" />
+    <target
+        android:name="logo_piece04"
+        android:animation="@anim/logo_piece04_anim" />
+    <target
+        android:name="logo_piece05"
+        android:animation="@anim/logo_piece05_anim" />
+    <target
+        android:name="logo_piece06"
+        android:animation="@anim/logo_piece06_anim" />
+    <target
+        android:name="logo_piece07"
+        android:animation="@anim/logo_piece07_anim" />
+    <target
+        android:name="logo_piece08"
+        android:animation="@anim/logo_piece08_anim" />
+    <target
+        android:name="logo_piece09"
+        android:animation="@anim/logo_piece09_anim" />
+    <target
+        android:name="logo_piece10"
+        android:animation="@anim/logo_piece10_anim" />
+    <target
+        android:name="logo_piece11"
+        android:animation="@anim/logo_piece11_anim" />
+    <target
+        android:name="logo_piece12"
+        android:animation="@anim/logo_piece12_anim" />
+    <target
+        android:name="logo_piece13"
+        android:animation="@anim/logo_piece13_anim" />
+    <target
+        android:name="logo_piece14"
+        android:animation="@anim/logo_piece14_anim" />
+    <target
+        android:name="logo_piece15"
+        android:animation="@anim/logo_piece15_anim" />
+</animated-vector>

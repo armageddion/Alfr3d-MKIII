@@ -16,6 +16,12 @@
             android:summary="Set home network name"
             android:dialogTitle="@string/ssid_home"
             android:hint="Dro3d" />
+        <EditTextPreference
+            android:key="home_ip_preference"
+            android:title="@string/alfr3d_home"
+            android:summary="Set home alfr3d ip"
+            android:dialogTitle="@string/alfr3d_home"
+            android:hint="192.168.0.111" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/host_settings_office">

@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.littl31.alfr3d.util.Alfr3dUtil;
+import com.littl31.alfr3d.util.NetworkUtil;
 import com.littl31.alfr3d.util.NetwrokChangeReceiver;
 import com.littl31.alfr3d.util.TypeWriter;
 
@@ -82,6 +83,7 @@ public class HomeActivity extends Activity {
             // this looks like a good place to put my animation in
             window_response_anim(findViewById(R.id.alfr3d_response_bg));
             window_log_anim(findViewById(R.id.alfr3d_log_bg));
+            logo_anim((TextView) findViewById(R.id.logo3));
         }
     }
 
@@ -212,8 +214,13 @@ public class HomeActivity extends Activity {
 
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String alfr3d_url= mySharedPreferences.getString("alfr3d_url_preference_home","url not set");
+        if (NetworkUtil.isConnectedToHome(this)) {
+            Log.d("Home","Connected to home network...");
+            alfr3d_url= mySharedPreferences.getString("home_ip_preference","ip not set");
+        }
         String full_alfr3d_call = alfr3d_url;
         Log.d("Home", "Alfr3d URL:"+alfr3d_url);
+
 
         //TEMP DEBUGING STUFF>>>
         String homeSSID = mySharedPreferences.getString("home_ssid_preference","ssid not set");
@@ -302,6 +309,20 @@ public class HomeActivity extends Activity {
 
         text_anim.setVisibility(View.VISIBLE);
         for (Drawable drawable : text_anim.getCompoundDrawables()) {
+
+            if (drawable instanceof Animatable) {
+                ((Animatable) drawable).start();
+            }
+        }
+    }
+
+    // cool logo creation animation
+    public void logo_anim(TextView view) {
+        Log.d("Home","Starting littl31 logo anim");
+
+        view.setVisibility(View.VISIBLE);
+        view.setAlpha(1f);
+        for (Drawable drawable : view.getCompoundDrawables()) {
 
             if (drawable instanceof Animatable) {
                 ((Animatable) drawable).start();

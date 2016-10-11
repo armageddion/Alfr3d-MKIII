@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@drawable/alfr3d_background"
     tools:context=".SplashActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -18,5 +18,13 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:contentDescription="@string/SplashRoll" />
+    <TextView
+        android:id="@+id/logo3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:alpha="1"
+        android:drawableStart="@drawable/l31logo_splash_anim"
+        android:layout_gravity="center" />
 
 </FrameLayout>

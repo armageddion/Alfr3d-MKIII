@@ -63,6 +63,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.littl31.alfr3d.R;
+import com.littl31.alfr3d.util.NetworkUtil;
 import com.littl31.alfr3d.util.NetwrokChangeReceiver;
 import com.littl31.alfr3d.util.TypeWriter;
 
@@ -77,7 +78,7 @@ public class MainActivity extends Activity {
     // button views.. these will be used by a few methods below
     private TextView [] buttons = new TextView[6];
 
-    // intiate type writer for animated responses
+    // initiate type writer for animated responses
     private TypeWriter writer;
 
     // set up text to speech
@@ -241,6 +242,7 @@ public class MainActivity extends Activity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
+            logo_anim((TextView) findViewById(R.id.logo3));
         }
     }
 
@@ -263,6 +265,7 @@ public class MainActivity extends Activity {
         window_anim((TextView) findViewById(R.id.alfr3d_response_bg));
         // write out a quip
         writer.animateText("Resuming systems on main thread");
+        logo_anim((TextView) findViewById(R.id.logo3));
     }
 
     @Override
@@ -281,7 +284,6 @@ public class MainActivity extends Activity {
             ttsobj.shutdown();
             Log.d("onDestroy", "Releasing TTS hogs");
         }
-
     }
 
     public void home(View view){
@@ -296,6 +298,7 @@ public class MainActivity extends Activity {
         this.startActivity(office);
     }
 
+    // coordinates window
     public void show_win1(View view) {
         TextView win1_text = (TextView) findViewById(R.id.alfr3d_win1_text);
         if (win1_text.getAlpha() == 0) {
@@ -303,6 +306,7 @@ public class MainActivity extends Activity {
             win1_text.animate()
                     .alpha(1f)
                     .setDuration(1000);
+            writer.animateText("showing window 1");
         }
         else {
             TextView win1 = (TextView) findViewById(R.id.alfr3d_win1);
@@ -315,9 +319,11 @@ public class MainActivity extends Activity {
             win1_text.animate()
                     .alpha(0f)
                     .setDuration(1000);
+            writer.animateText("hiding window 1");
         }
     }
 
+    // speed window
     public void show_win2(View view) {
         TextView win2_text = (TextView) findViewById(R.id.alfr3d_win2_text);
         if (win2_text.getAlpha() == 0) {
@@ -325,6 +331,7 @@ public class MainActivity extends Activity {
             win2_text.animate()
                     .alpha(1f)
                     .setDuration(1000);
+            writer.animateText("showing window 2");
         }
         else {
             TextView win2 = (TextView) findViewById(R.id.alfr3d_win2);
@@ -337,6 +344,7 @@ public class MainActivity extends Activity {
             win2_text.animate()
                     .alpha(0f)
                     .setDuration(1000);
+            writer.animateText("hiding window 2");
         }
     }
 
@@ -347,6 +355,7 @@ public class MainActivity extends Activity {
             win3_text.animate()
                     .alpha(1f)
                     .setDuration(1000);
+            writer.animateText("showing window 3");
         }
         else {
             TextView win3 = (TextView) findViewById(R.id.alfr3d_win3);
@@ -359,6 +368,7 @@ public class MainActivity extends Activity {
             win3_text.animate()
                     .alpha(0f)
                     .setDuration(1000);
+            writer.animateText("hiding window 3");
         }
     }
 
@@ -369,6 +379,7 @@ public class MainActivity extends Activity {
             win4_text.animate()
                     .alpha(1f)
                     .setDuration(1000);
+            writer.animateText("showing window 4");
         }
         else {
             TextView win4 = (TextView) findViewById(R.id.alfr3d_win4);
@@ -381,6 +392,7 @@ public class MainActivity extends Activity {
             win4_text.animate()
                     .alpha(0f)
                     .setDuration(1000);
+            writer.animateText("hiding window 4");
         }
     }
 
@@ -391,6 +403,7 @@ public class MainActivity extends Activity {
             win5_text.animate()
                     .alpha(1f)
                     .setDuration(1000);
+            writer.animateText("showing window 5");
         }
         else {
             TextView win5 = (TextView) findViewById(R.id.alfr3d_win5);
@@ -403,6 +416,7 @@ public class MainActivity extends Activity {
             win5_text.animate()
                     .alpha(0f)
                     .setDuration(1000);
+            writer.animateText("hiding window 5");
         }
     }
 
@@ -525,7 +539,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    // cool response window creation animation
+    // cool logo creation animation
     public void logo_anim(TextView view) {
         Log.d("Home","Starting littl31 logo anim");
 

@@ -60,7 +60,7 @@ public class NetwrokChangeReceiver extends BroadcastReceiver{
             Log.d("NetworkChangeReceiver", "Not Connected to WiFi");
             Intent main = new Intent(context, MainActivity.class);
             //main.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(main);
+            //context.startActivity(main);
         }
     }
 }

@@ -12,7 +12,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/littl31_logo_blue_ic"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -61,13 +61,11 @@
                 android:value="com.littl31.alfr3d.MainActivity" />
         </activity>
         <!-- Receive Wi-Fi connection state changes -->
-        <!--
         <receiver android:name=".util.NetwrokChangeReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        -->
     </application>
 
 </manifest>

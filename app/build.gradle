@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
-        versionName '4.0.9'
+        versionName '4.1.0'
     }
     buildTypes {
         release {
@@ -24,7 +24,7 @@ android {
             zipAlignEnabled true
         }
         debug {
-            debuggable false
+            debuggable true
         }
     }
     productFlavors {

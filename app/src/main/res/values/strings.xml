@@ -31,6 +31,7 @@
     <string name="host_settings_home">Home Settings</string>
     <string name="url_string_home">Alfr3d Url</string>
     <string name="ssid_home">Home SSID</string>
+    <string name="alfr3d_home">Home IP</string>
     <!-- Home -->
     <string name="host_settings_office">Office Settings</string>
     <string name="url_string_office">Alfr3d Url</string>
