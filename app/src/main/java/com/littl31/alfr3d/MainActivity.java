@@ -153,7 +153,7 @@ public class MainActivity extends Activity {
                 mGeoSpeedView.setText(String.valueOf(Math.round(curSpeed)));
                 if (curSpeed > 0.0) {
                     // draw the speed display
-                    show_win1(findViewById(R.id.alfr3d_win3));
+                    //show_win1(findViewById(R.id.alfr3d_win3));
                 }
 //                if (curSpeed > 0.0 ){
 //                    Log.d("Main", "Speed: "+curSpeed);

@@ -258,6 +258,8 @@ public class HomeActivity extends Activity {
         }
 
         final String finalCall = full_alfr3d_call;
+        Log.d("Home", "Alfr3d Call: "+finalCall);
+
         TextView Alfr3dURLView = (TextView) findViewById(R.id.alfr3d_call);
         Alfr3dURLView.setText(full_alfr3d_call);
 

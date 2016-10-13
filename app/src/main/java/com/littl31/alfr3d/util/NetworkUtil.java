@@ -49,7 +49,7 @@ public class NetworkUtil {
     }
 
     public static boolean isConnectedToHome(Context context) {
-        String ssid = null;
+        String ssid = "";
 
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String homeSSID = mySharedPreferences.getString("home_ssid_preference","ssid not set");

@@ -86,8 +86,7 @@
         android:layout_gravity="end|top"
         android:text=""
         android:alpha="1"
-        android:drawableStart="@drawable/l31logo_anim"
-        android:onClick="logo_anim" />
+        android:drawableStart="@drawable/l31logo_anim" />
 
     <ImageView
         android:layout_width="192dp"
