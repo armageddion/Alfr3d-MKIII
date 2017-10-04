@@ -133,7 +133,8 @@ public class MainActivity extends Activity {
         buttonAnim();
 
         // need to get MAC address for later
-        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        //WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE); // doesnt work on Android N
+        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         String MAC = manager.getConnectionInfo().getMacAddress();
         Log.d("Main", "MAC: "+MAC);
 
